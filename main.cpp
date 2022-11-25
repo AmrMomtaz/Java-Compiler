@@ -1,6 +1,13 @@
 #include <iostream>
+#include <unordered_map>
+#include "utils/TransitionTable.h"
 
+/**
+ * Driver code (starting point of the project)
+ */
+
+using namespace std;
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    cout << "Hello world!" << endl;
     return 0;
 }
