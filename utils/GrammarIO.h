@@ -1,4 +1,7 @@
-#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 #ifndef JAVA_COMPILER_GRAMMARIO_H
 #define JAVA_COMPILER_GRAMMARIO_H
@@ -12,6 +15,7 @@ private:
     string grammar_input_file;
 public:
     explicit GrammarIO(const string &grammarInputFile);
+    void get_regular_expressions();
 };
 
 #endif //JAVA_COMPILER_GRAMMARIO_H

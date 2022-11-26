@@ -1,5 +1,7 @@
 #include <unordered_map>
 #include <vector>
+#include <stdexcept>
+#include <iostream>
 
 #ifndef JAVA_COMPILER_TABLE_H
 #define JAVA_COMPILER_TABLE_H

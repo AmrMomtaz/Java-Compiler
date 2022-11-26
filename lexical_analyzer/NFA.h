@@ -1,5 +1,4 @@
-#include <string>
-#include "../utils/GrammarIO.cpp"
+#include "../utils/GrammarIO.h"
 
 #ifndef JAVA_COMPILER_NFA_H
 #define JAVA_COMPILER_NFA_H
@@ -12,8 +11,8 @@ class NFA {
 private:
     GrammarIO grammarIo;
 public:
-    NFA(const string &grammar_input_file);
+    explicit NFA(const string &grammar_input_file);
+    void run();
 };
-
 
 #endif //JAVA_COMPILER_NFA_H

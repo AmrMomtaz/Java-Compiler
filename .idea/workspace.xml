@@ -2,9 +2,6 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="Java_Compiler" targetName="GrammarIO" />
-      <config projectName="Java_Compiler" targetName="NFA" />
-      <config projectName="Java_Compiler" targetName="Table" />
       <config projectName="Java_Compiler" targetName="Java_Compiler" />
     </generated>
   </component>
@@ -15,12 +12,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c9b8183-7010-4a79-9f0f-382d18004812" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/utils/GrammarIO.cpp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/GrammarIO.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexical_analyzer/NFA.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lexical_analyzer/NFA.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexical_analyzer/NFA.h" beforeDir="false" afterPath="$PROJECT_DIR$/lexical_analyzer/NFA.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/GrammarIO.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/GrammarIO.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/GrammarIO.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils/GrammarIO.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/TransitionTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/TransitionTable.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/TransitionTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils/TransitionTable.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,38 +65,17 @@
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
   }
 }</component>
-  <component name="RunManager" selected="CMake Application.Java_Compiler">
-    <configuration name="GrammarIO" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Java_Compiler" TARGET_NAME="GrammarIO" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Java_Compiler" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Java_Compiler" TARGET_NAME="Java_Compiler" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Java_Compiler" RUN_TARGET_NAME="Java_Compiler">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="NFA" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Java_Compiler" TARGET_NAME="NFA" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Table" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Java_Compiler" TARGET_NAME="Table" CONFIG_NAME="Debug">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <list>
-      <item itemvalue="CMake Application.GrammarIO" />
-      <item itemvalue="CMake Application.Java_Compiler" />
-      <item itemvalue="CMake Application.NFA" />
-      <item itemvalue="CMake Application.Table" />
-    </list>
+    <configuration name="java_compiler" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Java_Compiler" TARGET_NAME="java_compiler" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Java_Compiler" RUN_TARGET_NAME="java_compiler">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -112,7 +91,7 @@
       <workItem from="1669416061551" duration="3400000" />
       <workItem from="1669457570475" duration="766000" />
       <workItem from="1669460924645" duration="2225000" />
-      <workItem from="1669464463525" duration="1007000" />
+      <workItem from="1669464463525" duration="4075000" />
     </task>
     <servers />
   </component>

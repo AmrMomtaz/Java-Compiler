@@ -1,5 +1,3 @@
-#include <stdexcept>
-#include <iostream>
 #include "TransitionTable.h"
 
 using namespace std;
