@@ -1,13 +1,10 @@
-#include <iostream>
-#include <unordered_map>
-#include "utils/TransitionTable.h"
-
+#include <string>
+#include "lexical_analyzer/NFA.cpp"
+using namespace std;
 /**
  * Driver code (starting point of the project)
  */
-
-using namespace std;
 int main() {
-    cout << "Hello world!" << endl;
+    NFA nfa("grammar_input.txt");
     return 0;
 }
