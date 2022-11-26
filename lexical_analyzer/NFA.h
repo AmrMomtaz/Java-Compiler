@@ -1,14 +1,18 @@
 #include <string>
+#include "../utils/GrammarIO.cpp"
 
 #ifndef JAVA_COMPILER_NFA_H
 #define JAVA_COMPILER_NFA_H
 
 using namespace std;
+/**
+ * Used to handle create the NFA using thompson's algorithm.
+ */
 class NFA {
 private:
-    static void initialize_rules(const string& grammar_input_file);
+    GrammarIO grammarIo;
 public:
-    explicit NFA(const string &grammar_input_file);
+    NFA(const string &grammar_input_file);
 };
 
 
