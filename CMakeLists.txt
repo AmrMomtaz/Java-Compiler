@@ -11,5 +11,4 @@ set(SOURCE
 
 add_executable(java_compiler "${SOURCE}")
 
-
 file(COPY grammar_input.txt DESTINATION ${CMAKE_CURRENT_BINARY_DIR})

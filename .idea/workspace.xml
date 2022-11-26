@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager">
     <generated>
-      <config projectName="Java_Compiler" targetName="Java_Compiler" />
+      <config projectName="Java_Compiler" targetName="java_compiler" />
     </generated>
   </component>
   <component name="CMakeSettings">
@@ -14,13 +14,10 @@
     <list default="true" id="8c9b8183-7010-4a79-9f0f-382d18004812" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/grammar_input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/grammar_input.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lexical_analyzer/NFA.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lexical_analyzer/NFA.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexical_analyzer/NFA.h" beforeDir="false" afterPath="$PROJECT_DIR$/lexical_analyzer/NFA.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/GrammarIO.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/GrammarIO.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/GrammarIO.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils/GrammarIO.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/TransitionTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/TransitionTable.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/TransitionTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils/TransitionTable.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,24 +50,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;cmake.loaded.for.project&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Momtaz/Documents/GitHub/Java-Compiler&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "cmake.loaded.for.project": "true",
+    "last_opened_file_path": "C:/Users/Momtaz/Documents/GitHub/Java-Compiler",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "structure.view.defaults.are.configured": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="java_compiler" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Java_Compiler" TARGET_NAME="java_compiler" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Java_Compiler" RUN_TARGET_NAME="java_compiler">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -91,7 +84,10 @@
       <workItem from="1669416061551" duration="3400000" />
       <workItem from="1669457570475" duration="766000" />
       <workItem from="1669460924645" duration="2225000" />
-      <workItem from="1669464463525" duration="4075000" />
+      <workItem from="1669464463525" duration="4802000" />
+      <workItem from="1669482920130" duration="413000" />
+      <workItem from="1669484569009" duration="489000" />
+      <workItem from="1669491938654" duration="6973000" />
     </task>
     <servers />
   </component>
