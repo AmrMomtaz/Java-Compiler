@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CMakePresetLoader"><![CDATA[{
+  "useNewFormat": true
+}]]></component>
   <component name="CMakeRunConfigurationManager">
     <generated>
       <config projectName="Java_Compiler" targetName="java_compiler" />
@@ -12,12 +15,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8c9b8183-7010-4a79-9f0f-382d18004812" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/lexical_analyzer_generator/LexicalAnalyzer.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lexical_analyzer_generator/LexicalAnalyzer.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/grammar_input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/grammar_input.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lexical_analyzer/NFA.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lexical_analyzer/NFA.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/GrammarIO.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/GrammarIO.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/GrammarIO.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils/GrammarIO.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexical_analyzer/NFA.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/lexical_analyzer_generator/NFA.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lexical_analyzer/NFA.h" beforeDir="false" afterPath="$PROJECT_DIR$/lexical_analyzer_generator/NFA.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/TransitionTable.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/TransitionTable.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/TransitionTable.h" beforeDir="false" afterPath="$PROJECT_DIR$/utils/TransitionTable.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,6 +65,7 @@
     "cidr.known.project.marker": "true",
     "cmake.loaded.for.project": "true",
     "last_opened_file_path": "C:/Users/Momtaz/Documents/GitHub/Java-Compiler",
+    "nodejs_package_manager_path": "npm",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "structure.view.defaults.are.configured": "true"
   }
@@ -88,6 +95,7 @@
       <workItem from="1669482920130" duration="413000" />
       <workItem from="1669484569009" duration="489000" />
       <workItem from="1669491938654" duration="6973000" />
+      <workItem from="1669638659392" duration="28725000" />
     </task>
     <servers />
   </component>
@@ -104,5 +112,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/main.cpp</url>
+          <line>163</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
