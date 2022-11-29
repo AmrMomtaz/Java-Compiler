@@ -20,9 +20,13 @@ private:
         (string &regular_expression, unordered_map<string, vector<pair<char,char>>>& regular_expressions_map);
 public:
     explicit GrammarIO(const string &grammarInputFile);
+
+    // Return all the regular expressions in the grammar
     void get_regular_expressions();
-    void get_punctuation();
-    void get_keywords();
+    // Return all the punctuations in the grammar
+    vector<char> get_punctuation();
+    // Returns all the keywords in the grammar
+    vector<string> get_keywords();
 };
 
 #endif //JAVA_COMPILER_GRAMMARIO_H

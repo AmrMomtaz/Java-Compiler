@@ -27,11 +27,11 @@ void GrammarIO::get_regular_expressions() {
     }
 }
 
-void GrammarIO::get_punctuation() {
+vector<char> GrammarIO::get_punctuation() {
     vector<char> punctuations;
     ifstream infile(grammar_input_file);
     string line;
-    while (getline(infile, line)) {;
+    while (getline(infile, line)) {
         if (line[0] == '[') {
             int index = 1;
             bool check = false;
@@ -53,18 +53,17 @@ void GrammarIO::get_punctuation() {
         }
     }
     infile.close();
-    for (auto  &ch : punctuations)
-        cout << ch;
+    return punctuations;
 }
 
-void GrammarIO::get_keywords() {
+vector<string> GrammarIO::get_keywords() {
     vector<string> keywords;
     ifstream infile(grammar_input_file);
     string line;
-    while (getline(infile, line)) {;
+    while (getline(infile, line)) {
         if (line[0] == '{') {
             int index = 1;
-            while (index < line.size() && line[index != '}']) {
+            while (index < line.size() && line[index] != '}') {
                 if (line[index] != ' ') {
                     string keyword;
                     while (index < line.size()) {
@@ -82,8 +81,7 @@ void GrammarIO::get_keywords() {
         }
     }
     infile.close();
-    for (auto  &keyword : keywords)
-        cout << keyword << " ";
+    return keywords;
 }
 
 //

@@ -7,6 +7,8 @@ set(SOURCE
         main.cpp
         utils/TransitionTable.cpp
         utils/GrammarIO.cpp
+        utils/NfaNode.cpp
+        utils/NfaGraph.cpp
         lexical_analyzer/NFA.cpp
         lexical_analyzer/LexicalAnalyzer.cpp)
 
