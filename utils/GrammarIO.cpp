@@ -4,36 +4,16 @@ using namespace std;
 
 GrammarIO::GrammarIO(const string &grammarInputFile) : grammar_input_file(grammarInputFile) {}
 
-void GrammarIO::get_regular_expressions() {
-    unordered_map<string, vector<pair<char,char>>> regular_expressions_map;
-    ifstream infile(grammar_input_file);
-    vector<string> regular_expressions;
-    string line;
-    while (getline(infile, line)) {
-        string first_word;
-        istringstream iss(line);
-        iss >> first_word;
-        if (is_regular_expression(first_word))
-            regular_expressions.push_back(line);
-    }
-    infile.close();
-    for (auto &regular_expression : regular_expressions)
-        parse_regular_expression(regular_expression, regular_expressions_map);
-    for (auto& map_entry : regular_expressions_map) {
-        cout << map_entry.first << " = ";
-        for (auto& list_entry : map_entry.second)
-            cout << list_entry.first << "," << list_entry.second << " ";
-        cout << endl;
-    }
-}
-
 vector<char> GrammarIO::get_punctuation() {
     vector<char> punctuations;
     ifstream infile(grammar_input_file);
     string line;
     while (getline(infile, line)) {
-        if (line[0] == '[') {
-            int index = 1;
+        int index = 0;
+        while (line[index] == ' ')
+            index++;
+        if (line[index] == '[') {
+            index++;
             bool check = false;
             while (line[index] != ']') {
                 if (line[index] == '\\') {
@@ -61,8 +41,11 @@ vector<string> GrammarIO::get_keywords() {
     ifstream infile(grammar_input_file);
     string line;
     while (getline(infile, line)) {
-        if (line[0] == '{') {
-            int index = 1;
+        int index = 0;
+        while (line[index] == ' ')
+            index++;
+        if (line[index] == '{') {
+            index++;
             while (index < line.size() && line[index] != '}') {
                 if (line[index] != ' ') {
                     string keyword;
@@ -84,12 +67,43 @@ vector<string> GrammarIO::get_keywords() {
     return keywords;
 }
 
+unordered_map<string, vector<char>> GrammarIO::get_regular_expressions() {
+    ifstream infile(grammar_input_file);
+    vector<string> regular_expressions;
+    string line;
+    while (getline(infile, line)) {
+        string first_word;
+        istringstream iss(line);
+        iss >> first_word;
+        if (is_regular_expression(first_word))
+            regular_expressions.push_back(line);
+    }
+    infile.close();
+    return parse_regular_expression(regular_expressions);
+}
+
+unordered_map<string, vector<string>> GrammarIO::get_regular_definitions() {
+    unordered_map<string,vector<string>> regular_definitions_map;
+    ifstream infile(grammar_input_file);
+    vector<string> regular_definitions;
+    string line;
+    while (getline(infile, line)) {
+        string first_word;
+        istringstream iss(line);
+        iss >> first_word;
+        if (is_regular_definition(first_word))
+            regular_definitions.push_back(line);
+    }
+    infile.close();
+    return parse_regular_definition(regular_definitions);
+}
+
 //
 // Private methods
 //
 
 /**
- * Determines whether it is a regular expression or not.
+ * Checks whether the line is a regular expression or not.
  */
 bool GrammarIO::is_regular_expression(const string& first_word) {
     if (first_word[first_word.size()-1] == ':' || first_word[0] == '[' || first_word[0] == '{')
@@ -101,30 +115,113 @@ bool GrammarIO::is_regular_expression(const string& first_word) {
 /**
  * Parses a given regular expression and adds it to the map.
  */
-void GrammarIO::parse_regular_expression
-    (string &regular_expression,unordered_map<string, vector<pair<char, char>>> &regular_expressions_map) {
+unordered_map<string, vector<char>> GrammarIO::parse_regular_expression
+    (vector<string> &regular_expressions) {
 
-    // getting regular expression's name
-    string regular_expression_name;
-    int index = 0, n = regular_expression.size();
-    for (; index < n ; index++) {
-        if (regular_expression[index] == ' ')
-            continue;
-        else if (regular_expression[index] == '=')
-            break;
-        else
-            regular_expression_name += regular_expression[index];
-    }
-    index++;
-    regular_expressions_map[regular_expression_name] = vector<pair<char, char>>();
-    // Getting expression characters
-    for (; index < n ; index++) {
-        if (regular_expression[index] != ' ' && regular_expression[index] != '|') {
-            char ch1 = regular_expression[index++];
-            while (regular_expression[index] == ' ' || regular_expression[index] == '-')
-                index++;
-            char ch2 = regular_expression[index++];
-            regular_expressions_map[regular_expression_name].push_back({ch1, ch2});
+    unordered_map<string, vector<pair<char,char>>> regular_expressions_pairs_map;
+    for (auto &regular_expression : regular_expressions) {
+        // getting regular expression's name
+        string regular_expression_name;
+        int index = 0, n = regular_expression.size();
+        for (; index < n ; index++) {
+            if (regular_expression[index] == ' ')
+                continue;
+            else if (regular_expression[index] == '=')
+                break;
+            else
+                regular_expression_name += regular_expression[index];
+        }
+        index++;
+        regular_expressions_pairs_map[regular_expression_name] = vector<pair<char, char>>();
+        // Getting expression characters
+        for (; index < n ; index++) {
+            if (regular_expression[index] != ' ' && regular_expression[index] != '|') {
+                char ch1 = regular_expression[index++];
+                while (regular_expression[index] == ' ' || regular_expression[index] == '-')
+                    index++;
+                char ch2 = regular_expression[index++];
+                regular_expressions_pairs_map[regular_expression_name].push_back({ch1, ch2});
+            }
         }
     }
+    unordered_map<string, vector<char>> regular_expressions_map;
+    for (auto& map_entry : regular_expressions_pairs_map) {
+        string regular_expression_name = map_entry.first;
+        vector<char> characters;
+        for (auto& list_entry : map_entry.second)
+            for (char ch = list_entry.first ; ch <= list_entry.second ; ch ++)
+                characters.push_back(ch);
+        regular_expressions_map[regular_expression_name] = characters;
+    }
+    regular_expressions_pairs_map.clear();
+    return regular_expressions_map;
+}
+
+/**
+ * Checks whether the line is a regular definition or not.
+ */
+bool GrammarIO::is_regular_definition(const string &first_word) {
+    if (first_word[first_word.size()-1] == ':')
+        return true;
+    else
+        return false;
+}
+
+/**
+ * Parses a given regular definition and adds it to the map.
+ */
+unordered_map<string, vector<string>> GrammarIO::parse_regular_definition
+    (vector<string> &regular_definitions) {
+
+    unordered_map<string, vector<string>> regular_definitions_map;
+    for (auto& regular_definition : regular_definitions) {
+        int index = 0, n = regular_definition.size();
+        while (regular_definition[index] == ' ')
+            index++;
+        string regular_definition_name;
+        while (regular_definition[index] != ':')
+            regular_definition_name += regular_definition[index++];
+        index++;
+        vector<string> tokens;
+        while (index < n) {
+            while (index < n && regular_definition[index] == ' ')
+                index++;
+            string current;
+            bool check = false;
+            while (index < n) {
+                char ch = regular_definition[index++];
+                if (ch == '\\') {
+                    check = ! check;
+                    current += ch;
+                    continue;
+                }
+                else if (ch == '|' || ch == '+' || ch == '(' || ch == ')') {
+                    if (check)
+                        current += ch;
+                    else {
+                        if (!current.empty()) {
+                            tokens.push_back(current);
+                            current = "";
+                        }
+                        tokens.push_back(string(1, ch));
+                    }
+                }
+                else if (ch == ' ') {
+                    if (!current.empty()) {
+                        tokens.push_back(current);
+                        current = "";
+                    }
+                    while(index < n && regular_definition[index] == ' ')
+                        index++;
+                }
+                else
+                    current += ch;
+                check = false;
+            }
+            if (!current.empty())
+                tokens.push_back(current);
+            regular_definitions_map[regular_definition_name] = tokens;
+        }
+    }
+    return regular_definitions_map;
 }

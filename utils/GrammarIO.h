@@ -16,17 +16,22 @@ class GrammarIO {
 private:
     string grammar_input_file;
     static bool is_regular_expression(const string& first_word);
-    static void parse_regular_expression
-        (string &regular_expression, unordered_map<string, vector<pair<char,char>>>& regular_expressions_map);
+    static unordered_map<string, vector<char>> parse_regular_expression
+        (vector<string> &regular_expressions);
+    static bool is_regular_definition(const string& first_word);
+    static unordered_map<string, vector<string>> parse_regular_definition
+        (vector<string> &regular_definitions);
 public:
     explicit GrammarIO(const string &grammarInputFile);
 
-    // Return all the regular expressions in the grammar
-    void get_regular_expressions();
-    // Return all the punctuations in the grammar
+    // Returns all the punctuations in the grammar
     vector<char> get_punctuation();
     // Returns all the keywords in the grammar
     vector<string> get_keywords();
+    // Returns regular expressions' map where <regular_expression_name, chars>
+    unordered_map<string, vector<char>> get_regular_expressions();
+    // Returns regular definitions' map where <pattern_name, pattern_tokens_list>
+    unordered_map<string, vector<string>> get_regular_definitions();
 };
 
 #endif //JAVA_COMPILER_GRAMMARIO_H
