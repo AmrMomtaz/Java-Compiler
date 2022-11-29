@@ -7,8 +7,8 @@ set(SOURCE
         main.cpp
         utils/TransitionTable.cpp
         utils/GrammarIO.cpp
-        lexical_analyzer_generator/NFA.cpp
-        lexical_analyzer_generator/LexicalAnalyzer.cpp)
+        lexical_analyzer/NFA.cpp
+        lexical_analyzer/LexicalAnalyzer.cpp)
 
 add_executable(java_compiler "${SOURCE}")
 

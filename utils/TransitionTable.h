@@ -25,7 +25,9 @@ private:
 
 public:
     explicit TransitionTable(bool isDeterministic);
-    explicit TransitionTable(bool isDeterministic, unordered_map<int, unordered_map<char, vector<int>>> table_map, unordered_map<int, string> accepting_states_map,int starting_state_int);
+    explicit TransitionTable(bool isDeterministic, unordered_map<int, unordered_map<char,
+                             vector<int>>> table_map, unordered_map<int,string> accepting_states_map,
+                             int starting_state_int);
 
     // Setter
     void setTable(unordered_map<int, unordered_map<char, vector<int>>> table_map);
