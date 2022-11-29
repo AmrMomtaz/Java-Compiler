@@ -8,8 +8,10 @@
  */
 class NfaGraph {
 public:
-    // Creates new node
-    void create_new_node(int& new_id);
+    // Contains the starting nodes of each pattern.
+    vector<NfaNode *> starting_nodes;
+    // Creates new node INCREMENTS the new_id.
+    NfaNode* create_new_node(int& new_id);
 };
 
 

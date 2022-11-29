@@ -18,7 +18,7 @@ private:
     unordered_map<int, unordered_map<char,vector<int>>> table;
     // Hashtable which contains the accepting states with their tokens' names
     unordered_map<int, string> accepting_states;
-    //the index of the starting state
+    // The index of the starting state
     int starting_state;
     // Determines whether the table is for NFA or DFA
     bool is_deterministic;
@@ -28,23 +28,19 @@ public:
     explicit TransitionTable(bool isDeterministic, unordered_map<int, unordered_map<char,
                              vector<int>>> table_map, unordered_map<int,string> accepting_states_map,
                              int starting_state_int);
+    // Adds new state to the accepting states
+    void addAcceptingState(int state,const string& state_name);
 
-    // Setter
-    void setTable(unordered_map<int, unordered_map<char, vector<int>>> table_map);
-    // Getter
+    // Getters
     const unordered_map<int, unordered_map<char, vector<int>>> &getTable() const;
-
-    // Setter
-    void setAcceptingStates(unordered_map<int, string> accepting_states_map);
-    // Getter
-    const unordered_map<int, string> &getAcceptingStates() const;
-
-    // Setter
-    void setStartingStates(int ss);
+    const unordered_map<int, string>& getAcceptingStates() const;
     const int &getStartingState()const;
-
-    //Getter
     const bool &isDeterministic() const;
+
+    // Setters
+    void setAcceptingStates(unordered_map<int, string> accepting_states_map);
+    void setTable(unordered_map<int, unordered_map<char, vector<int>>> table_map);
+    void setStartingStates(int ss);
 };
 
 #endif //JAVA_COMPILER_TABLE_H

@@ -1,4 +1,4 @@
-#include "lexical_analyzer/LexicalAnalyzerTest.cpp"
+#include "lexical_analyzer/NFA.h"
 
 using namespace std;
 
@@ -6,6 +6,7 @@ using namespace std;
  * Driver code (starting point of the project)
  */
 int main() {
-    lexicalAnalyzerTestRun();
+    NFA nfa("grammar_input.txt");
+    nfa.run();
     return 0;
 }
