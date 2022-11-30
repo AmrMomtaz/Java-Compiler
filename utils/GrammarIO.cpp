@@ -195,7 +195,7 @@ unordered_map<string, vector<string>> GrammarIO::parse_regular_definition
                     current += ch;
                     continue;
                 }
-                else if (ch == '|' || ch == '+' || ch == '(' || ch == ')') {
+                else if (ch == '|' || ch == '*' || ch == '+' || ch == '(' || ch == ')') {
                     if (check)
                         current += ch;
                     else {
