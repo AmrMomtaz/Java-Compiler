@@ -21,18 +21,20 @@ private:
     // The index of the starting state
     int starting_state;
     // Determines whether the table is for NFA or DFA
-    bool is_deterministic;
+    const bool is_deterministic;
 
 public:
     explicit TransitionTable(bool isDeterministic);
-    explicit TransitionTable(bool isDeterministic, unordered_map<int, unordered_map<char,
-                             vector<int>>> table_map, unordered_map<int,string> accepting_states_map,
+    explicit TransitionTable(bool isDeterministic, const unordered_map<int, unordered_map<char,
+                             vector<int>>>& table_map,const unordered_map<int,string>& accepting_states_map,
                              int starting_state_int);
+    explicit TransitionTable(bool isDeterministic, const unordered_map<int, unordered_map<char,vector<int>>>& table,
+                             const unordered_map<int, string>& accepting_states);
     // Adds new state to the accepting states
     void addAcceptingState(int state,const string& state_name);
 
     // Getters
-    const unordered_map<int, unordered_map<char, vector<int>>> &getTable() const;
+    unordered_map<int, unordered_map<char, vector<int>>> &getTable();
     const unordered_map<int, string>& getAcceptingStates() const;
     const int &getStartingState()const;
     const bool &isDeterministic() const;

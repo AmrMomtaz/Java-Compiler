@@ -79,6 +79,44 @@ pair<NfaNode *, NfaNode *> NfaGraph::union_op
     return {first_node, last_node};
 }
 
+pair<NfaNode *, NfaNode *>NfaGraph::union_op
+        (const pair<NfaNode *, NfaNode *> &SE_nodes1, const string &token2,
+         int &new_id, bool kleene_closure, bool positive_closure) {
+
+    NfaNode* first_node = create_new_node(new_id);
+    NfaNode* kleene_first = nullptr;
+    if (kleene_closure) kleene_first = create_new_node(new_id);
+    pair<NfaNode*, NfaNode*> SE_nodes2 = represent_token(token2, new_id);
+
+    NfaNode* last_node = create_new_node(new_id);
+    SE_nodes1.second->add_child(0, last_node);
+    SE_nodes2.second->add_child(0, last_node);
+    first_node->add_child(0, SE_nodes1.first);
+
+    if (kleene_closure) {
+        first_node->add_child(0, kleene_first);
+        kleene_first->add_child(0, SE_nodes2.first);
+        kleene_first->add_child(0, SE_nodes2.second);
+    }
+    else
+        first_node->add_child(0, SE_nodes2.first);
+    if (kleene_closure || positive_closure)
+        SE_nodes2.second->add_child(0, SE_nodes2.first);
+    return {first_node, last_node};
+}
+
+pair<NfaNode *, NfaNode *>NfaGraph::union_op
+    (const pair<NfaNode *, NfaNode *> &SE_nodes1, const pair<NfaNode *, NfaNode *> &SE_nodes2, int &new_id) {
+
+    NfaNode* first_node = create_new_node(new_id);
+    NfaNode* last_node = create_new_node(new_id);
+    SE_nodes1.second->add_child(0, last_node);
+    SE_nodes2.second->add_child(0, last_node);
+    first_node->add_child(0, SE_nodes1.first);
+    first_node->add_child(0, SE_nodes2.first);
+    return {first_node, last_node};
+}
+
 pair<NfaNode *, NfaNode *> NfaGraph::perform_kleene_closure(const string &token, int &new_id) {
     NfaNode* kleene_first = create_new_node(new_id);
     pair<NfaNode*, NfaNode*> SE_nodes = represent_token(token, new_id);

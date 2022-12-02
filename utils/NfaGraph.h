@@ -36,6 +36,10 @@ public:
      */
     pair<NfaNode*, NfaNode*> union_op(const string& token1, const string& token2, int& new_id,
                                       bool kleene_closure, bool positive_closure);
+    pair<NfaNode*, NfaNode*> union_op(const pair<NfaNode*, NfaNode*>& SE_nodes1, const string& token2,
+                                      int& new_id, bool kleene_closure, bool positive_closure);
+    pair<NfaNode*, NfaNode*> union_op(const pair<NfaNode*, NfaNode*>& SE_nodes1,
+                                      const pair<NfaNode*, NfaNode*>& SE_nodes2, int& new_id);
 
     /**
      *  Performs kleene closure.

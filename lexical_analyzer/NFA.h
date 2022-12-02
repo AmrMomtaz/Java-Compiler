@@ -1,7 +1,7 @@
 #include "../utils/GrammarIO.h"
 #include "../utils/NfaGraph.h"
 #include "../utils/TransitionTable.h"
-#include <stack>
+#include <unordered_set>
 
 #ifndef JAVA_COMPILER_NFA_H
 #define JAVA_COMPILER_NFA_H
@@ -22,10 +22,14 @@ private:
     void handle_regular_definitions();
     pair<NfaNode*, NfaNode*> perform_recursion(const vector<string>& tokens,
                                                bool kleene_closure, bool positive_closure);
+    void initialize_table();
+    void dfs(NfaNode* root, unordered_map<int, unordered_map<char,vector<int>>>& table,unordered_set<int>& visited_nodes);
 public:
     explicit NFA(const string &grammar_input_file);
-    // Driver code of NFA
-    void run();
+
+    TransitionTable &getTransitionTable();
+
+    string get_highest_priority(vector<string>& accepting_states);
 };
 
 #endif //JAVA_COMPILER_NFA_H
