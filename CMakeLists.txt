@@ -10,6 +10,7 @@ set(SOURCE
         utils/NfaNode.cpp
         utils/NfaGraph.cpp
         lexical_analyzer/NFA.cpp
+        lexical_analyzer/DFA.cpp
         lexical_analyzer/LexicalAnalyzer.cpp)
 
 add_executable(java_compiler "${SOURCE}")
