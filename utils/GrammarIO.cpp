@@ -2,7 +2,9 @@
 
 using namespace std;
 
-GrammarIO::GrammarIO(const string &grammarInputFile) : grammar_input_file(grammarInputFile) {}
+GrammarIO::GrammarIO(const string &grammarInputFile) : grammar_input_file(grammarInputFile) {
+    initialize_priority_map();
+}
 
 vector<char> GrammarIO::get_punctuation() {
     vector<char> punctuations;
@@ -245,4 +247,49 @@ string GrammarIO::clean_token(const string& token) {
         check = false;
     }
     return new_string;
+}
+
+/**
+ * Initialized the priority map.
+ */
+void GrammarIO::initialize_priority_map() {
+    const vector<char>& punctuations = get_punctuation();
+    const vector<string>& keywords = get_keywords();
+    for (char ch : punctuations)
+        priority_map[string(1,ch)] = 0;
+    for (const string& keyword : keywords)
+        priority_map[keyword] = 0;
+
+    // Getting regular definitions names in-order
+    vector<string> regular_definitions_names;
+    ifstream infile(grammar_input_file);
+    string line;
+    while (getline(infile, line)) {
+        string first_word;
+        istringstream iss(line);
+        iss >> first_word;
+        if (is_regular_definition(first_word))
+            regular_definitions_names.push_back
+                (string(first_word.begin(), first_word.end()-1));
+    }
+    infile.close();
+
+    int new_priority = 1;
+    for (const auto& regular_definition : regular_definitions_names)
+        priority_map[regular_definition] = new_priority++;
+}
+
+string GrammarIO::get_highest_priority(vector<string> &accepting_states) {
+    int highest_priority = INT32_MAX;
+    string result;
+    for (string& accepting_state : accepting_states) {
+        int current_priority = priority_map.at(accepting_state);
+        if (current_priority == 0)
+            return accepting_state;
+        else if (current_priority < highest_priority) {
+            highest_priority = current_priority;
+            result = accepting_state;
+        }
+    }
+    return result;
 }

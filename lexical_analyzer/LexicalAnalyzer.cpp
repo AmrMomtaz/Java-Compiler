@@ -21,8 +21,8 @@ pair<string ,string> LexicalAnalyzer::getNextToken(){
 
     int starting_idx = current_char_idx;
 
-    unordered_map<int, unordered_map<char, vector<int>>> table = TT.getTable();
-    unordered_map<int, string> accepting_states = TT.getAcceptingStates();
+    unordered_map<int, unordered_map<char, vector<int>>>& table = TT.getTable();
+    unordered_map<int, string>& accepting_states = TT.getAcceptingStates();
     int current_state = TT.getStartingState();
 
     vector<int> reached_states;

@@ -238,7 +238,9 @@ void NFA::initialize_table() {
     visited_nodes.clear();
 }
 
-void NFA::dfs(NfaNode* root, unordered_map<int, unordered_map<char,vector<int>>>& table, unordered_set<int>& visited_nodes) {
+void NFA::dfs(NfaNode* root, unordered_map<int, unordered_map<char,
+              vector<int>>>& table, unordered_set<int>& visited_nodes) {
+    
     int current_row = root->getId();
     if (visited_nodes.find(current_row) == visited_nodes.end()) {
         visited_nodes.insert(current_row);
@@ -260,10 +262,5 @@ TransitionTable &NFA::getTransitionTable() {
 }
 
 string NFA::get_highest_priority(vector<string>& accepting_states) {
-    for (string& accepting_state : accepting_states) {
-        if (accepting_state == "boolean" || accepting_state == "int" || accepting_state == "float"
-            || accepting_state == "if" || accepting_state == "else" || accepting_state == "while")
-            return accepting_state;
-    }
-    return accepting_states[0];
+    return grammarIo.get_highest_priority(accepting_states);
 }
