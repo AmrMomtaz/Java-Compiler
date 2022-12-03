@@ -32,6 +32,8 @@ public:
     unordered_map<string, vector<char>> get_regular_expressions();
     // Returns regular definitions' map where <pattern_name, pattern_tokens_list>
     unordered_map<string, vector<string>> get_regular_definitions();
+    // Cleans a given token and return a new token without the / and detects the epsilon
+    static string clean_token(const string &token);
 };
 
 #endif //JAVA_COMPILER_GRAMMARIO_H

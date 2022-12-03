@@ -195,7 +195,7 @@ unordered_map<string, vector<string>> GrammarIO::parse_regular_definition
                     current += ch;
                     continue;
                 }
-                else if (ch == '|' || ch == '+' || ch == '(' || ch == ')') {
+                else if (ch == '|' || ch == '*' || ch == '+' || ch == '(' || ch == ')') {
                     if (check)
                         current += ch;
                     else {
@@ -224,4 +224,25 @@ unordered_map<string, vector<string>> GrammarIO::parse_regular_definition
         }
     }
     return regular_definitions_map;
+}
+
+string GrammarIO::clean_token(const string& token) {
+    string new_string;
+    bool check = false;
+    for (char ch : token) {
+        if (ch == '\\') {
+            if (! check) {
+                check = true;
+                continue;
+            }
+            else
+                new_string += ch;
+        }
+        else if (check && ch == 'L')
+            new_string += string(1,0);
+        else
+            new_string += ch;
+        check = false;
+    }
+    return new_string;
 }
