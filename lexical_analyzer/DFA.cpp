@@ -5,7 +5,7 @@
 #include <unordered_set>
 using namespace std;
 
-DFA::DFA(NFA& nfaObj) : nfa(nfaObj), curr_state_num(0) {
+DFA::DFA(NFA& nfaObj) : nfa(nfaObj), transition_table(TransitionTable(true)), curr_state_num(0) {
     compute_column(vector<int>{0});
     while (! states_queue.empty()) {
         vector<int> states_vector = states_queue.front();
@@ -20,13 +20,13 @@ DFA::DFA(NFA& nfaObj) : nfa(nfaObj), curr_state_num(0) {
         //    .        .        .
         //    .        .        .
         for (int state : states_vector) {
-            const unordered_map<char, vector<int>> NFA_columns = nfa.getTransitionTable().getTable().at(state);
+            unordered_map<char, vector<int>>& NFA_columns = nfa.getTransitionTable().getTable().at(state);
 
             // a -> <5, 6>
             // .  .    .
             // .  .    .
             // .  .    .
-            for (auto it: NFA_columns) {
+            for (auto& it: NFA_columns) {
                 if (it.first == 0) continue;
                 // concatenate the values of the vector with the values in a -> <2, 3> for different states
                 row[it.first].insert(row[it.first].end(), it.second.begin(), it.second.end());
@@ -37,7 +37,7 @@ DFA::DFA(NFA& nfaObj) : nfa(nfaObj), curr_state_num(0) {
         for (const auto &it: row)
             row[it.first] = vector<int>{compute_column(it.second)};
 
-        table[state_number] = row;
+        transition_table.getTable()[state_number] = row;
     }
 
 //    states_to_state_map.clear();
@@ -82,7 +82,7 @@ void DFA::add_accepting_state(int new_state, const vector<int>& states) {
         }
     }
     if (! accepting_state_strings.empty())
-        accepting_states[new_state] = nfa.get_highest_priority(accepting_state_strings);
+        transition_table.addAcceptingState(new_state,  nfa.get_highest_priority(accepting_state_strings));
 }
 
 unordered_set<int> DFA::get_epsilon_closure(const vector<int>& states_vector){
@@ -125,7 +125,7 @@ unordered_set<int> DFA::get_epsilon_closure(const vector<int>& states_vector){
     return closure;
 }
 
-TransitionTable DFA::get_DFA() {
-    return TransitionTable(true, table, accepting_states);
+TransitionTable &DFA::getTransitionTable() {
+    return transition_table;
 }
 

@@ -16,8 +16,7 @@ class DFA {
 private:
 //    TransitionTable NFA_transition_table;
     NFA nfa;
-    unordered_map<int, unordered_map<char,vector<int>>> table;
-    unordered_map<int, string> accepting_states;
+    TransitionTable transition_table;
 
     map<vector<int>, int> states_to_state_map;
     queue<vector<int>> states_queue;
@@ -35,6 +34,7 @@ private:
 public:
 //    explicit DFA(TransitionTable NFATransitionTable);
     explicit DFA(NFA& nfa);
-    TransitionTable get_DFA();
+
+    TransitionTable &getTransitionTable();
 };
 #endif //JAVA_COMPILER_DFA_H

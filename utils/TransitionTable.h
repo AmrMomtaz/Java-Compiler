@@ -35,7 +35,7 @@ public:
 
     // Getters
     unordered_map<int, unordered_map<char, vector<int>>> &getTable();
-    const unordered_map<int, string>& getAcceptingStates() const;
+    unordered_map<int, string>& getAcceptingStates();
     const int &getStartingState()const;
     const bool &isDeterministic() const;
 

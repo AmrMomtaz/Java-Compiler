@@ -13,7 +13,7 @@ using namespace std;
 int main() {
     NFA nfa("grammar_input.txt");
     DFA dfa(nfa);
-    DFA_Minimized dfa_min(dfa.get_DFA());
+    DFA_Minimized dfa_min(dfa.getTransitionTable());
     dfa_min.optimize_dfa();
     LexicalAnalyzer LA(dfa_min.get_DFA_Minimized());
 //    LexicalAnalyzer LA(dfa.get_DFA());

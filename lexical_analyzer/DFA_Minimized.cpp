@@ -2,8 +2,10 @@
 
 using namespace std;
 
-DFA_Minimized::DFA_Minimized(TransitionTable trans_table) : tt(trans_table) {
-    cout << "[INFO] New DFA Minimizer created" << "\n";
+DFA_Minimized::DFA_Minimized(TransitionTable& trans_table) : tt(trans_table),
+    new_transition_table(TransitionTable(true)) {
+
+    cout << "[INFO] New DFA Minimizer created." << "\n";
 }
 
 bool DFA_Minimized::minimize(list<list<int>> &curr_partitions,
@@ -92,9 +94,9 @@ bool DFA_Minimized::is_equiv(int state_p, int state_q, const int indices[],
 
 void DFA_Minimized::optimize_dfa() {
 
-    int ss = tt.getStartingState();
-    unordered_map<int, unordered_map<char, vector<int>>> table = tt.getTable();
-    unordered_map<int, string> accepting_states = tt.getAcceptingStates();
+    int ss = 0;
+    unordered_map<int, unordered_map<char, vector<int>>>& table = tt.getTable();
+    unordered_map<int, string>& accepting_states = tt.getAcceptingStates();
 
     list<int> non_finals;
     list<int> finals;
@@ -135,8 +137,6 @@ void DFA_Minimized::optimize_dfa() {
 
     // Creating new Transition Table.
     int new_ss = indices[ss];
-    unordered_map<int, unordered_map<char, vector<int>>> new_table;
-    unordered_map<int, string> new_accepting_states;
 
     for (auto & i : partitions) {
         int u = i.front();
@@ -147,17 +147,15 @@ void DFA_Minimized::optimize_dfa() {
             continue;
 
         if (accepting_states.find(u) != accepting_states.end())
-            new_accepting_states[indices[u]] = accepting_states.at(u);
+            new_transition_table.addAcceptingState(indices[u], accepting_states.at(u));
 
         for (auto & kv : trans_u)
-            new_table[indices[u]][kv.first] = vector<int> { indices[kv.second[0]] };
+            new_transition_table.getTable()[indices[u]][kv.first] = vector<int> {indices[kv.second[0]]};
     }
 
-    tt.setStartingStates(new_ss);
-    tt.setAcceptingStates(new_accepting_states);
-    tt.setTable(new_table);
+    new_transition_table.setStartingStates(new_ss);
 }
 
 TransitionTable DFA_Minimized::get_DFA_Minimized() {
-    return tt;
+    return new_transition_table;
 }

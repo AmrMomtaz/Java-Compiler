@@ -25,7 +25,7 @@ void TransitionTable::addAcceptingState(int state, const string &state_name) {
 unordered_map<int, unordered_map<char, vector<int>>> &TransitionTable::getTable() {
     return table;
 }
-const unordered_map<int, string> &TransitionTable::getAcceptingStates() const {
+unordered_map<int, string> &TransitionTable::getAcceptingStates() {
     return accepting_states;
 }
 const int &TransitionTable::getStartingState() const {
