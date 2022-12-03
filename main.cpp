@@ -14,26 +14,24 @@ int main() {
     NFA nfa("grammar_input.txt");
     DFA dfa(nfa);
     DFA_Minimized dfa_min(dfa.getTransitionTable());
-    dfa_min.optimize_dfa();
-    LexicalAnalyzer LA(dfa_min.get_DFA_Minimized());
-//    LexicalAnalyzer LA(dfa.get_DFA());
+    LexicalAnalyzer LA(dfa_min.getMinimizedTransitionTable());
 
-    string input_text="";
-    ifstream myfile; myfile.open("test_program.txt");
-    if ( myfile.is_open() ) {
-        char mychar;
-        while (myfile) {
-            mychar = myfile.get();
-            input_text+=mychar;
+    string input_text;
+    ifstream fh;
+    fh.open("test_program.txt");
+    if (fh.is_open()) {
+        char ch;
+        while (fh) {
+            ch = fh.get();
+            input_text+=ch;
         }
     }
     cout << input_text << "\n";
-    myfile.close();
+    fh.close();
 
-    //split the input text on the white space
+    // split the input text on the white space
     vector<string> words = split_string_by_white_spaces(input_text);
     for (auto word = words.begin(); word != words.end(); ++word) {
-//        cout << *word << "\n";
         vector<pair<string, string>> tokens = LA.getAllTokensInText(*word);
         for (auto i = tokens.begin(); i != tokens.end(); ++i) {
             pair<string, string> token = *i;

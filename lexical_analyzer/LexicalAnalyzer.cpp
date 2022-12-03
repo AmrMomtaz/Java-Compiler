@@ -1,6 +1,6 @@
 #include "LexicalAnalyzer.h"
 
-LexicalAnalyzer::LexicalAnalyzer(TransitionTable tt) : TT(tt) {std::cout << "[INFO] New lexical analyzer created" << "\n";}
+LexicalAnalyzer::LexicalAnalyzer(TransitionTable& tt) : TT(tt) {std::cout << "[INFO] New lexical analyzer created" << "\n";}
 
 // Setter
 void LexicalAnalyzer::setText(string s){text = s; current_char_idx = 0;}

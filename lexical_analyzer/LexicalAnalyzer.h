@@ -12,7 +12,7 @@ private:
     string text;
     int current_char_idx = 0;
 public:
-    explicit LexicalAnalyzer(TransitionTable tt);
+    explicit LexicalAnalyzer(TransitionTable& tt);
 
     // Setter
     void setText(string s);

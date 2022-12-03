@@ -21,8 +21,7 @@ private:
                   const unordered_map<int, unordered_map<char, vector<int>>>& table);
 public:
     explicit DFA_Minimized(TransitionTable& trans_table);
-    void optimize_dfa();
-    TransitionTable get_DFA_Minimized();
+    TransitionTable& getMinimizedTransitionTable();
 };
 
 #endif //JAVA_COMPILER_DFA_MINIMIZED_H
