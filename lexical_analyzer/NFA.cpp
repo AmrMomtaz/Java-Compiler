@@ -229,20 +229,24 @@ void NFA::initialize_table() {
         initial_node->add_child(0, starting_node);
 
     unordered_set<int> visited_nodes;
-    unordered_map<int, unordered_map<char,vector<int>>> table;
     dfs(initial_node, transitionTable.getTable(), visited_nodes);
+    visited_nodes.clear();
 }
 
 void NFA::dfs(NfaNode* root, unordered_map<int, unordered_map<char,vector<int>>>& table, unordered_set<int>& visited_nodes) {
     int current_row = root->getId();
     if (visited_nodes.find(current_row) == visited_nodes.end()) {
         visited_nodes.insert(current_row);
+        bool row_added = false;
         for (pair<const char,vector<NfaNode*>>  map_entry : root->getChildren()) {
             for (NfaNode* child : map_entry.second) {
                 table[current_row][map_entry.first].push_back(child->getId());
+                row_added = true;
                 dfs(child, table, visited_nodes);
             }
         }
+        if (! row_added)
+            table[current_row] = unordered_map<char,vector<int>>();
     }
 }
 
