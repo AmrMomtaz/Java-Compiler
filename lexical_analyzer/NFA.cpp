@@ -12,6 +12,7 @@ NFA::NFA(const string &grammar_input_file) :
     handle_keywords_and_punctuations();
     handle_regular_definitions();
     initialize_table();
+    cout << "[INFO] NFA is created successfully." << endl;
 }
 
 //
@@ -48,7 +49,6 @@ void NFA::handle_keywords_and_punctuations() {
         nfaGraph.starting_nodes.push_back(SE_nodes.first);
         transitionTable.addAcceptingState(new_state_id-1, string(1, ch));
     }
-    cout << "BOOM" << endl;
 }
 
 void NFA::handle_regular_definitions() {
@@ -113,6 +113,7 @@ pair<NfaNode*, NfaNode*> NFA::perform_recursion
                         sentinelNode->add_child(0, SE_nodes.first);
                         ending_node = SE_nodes.second;
                     }
+                    prev_pair = SE_nodes;
                 }
                 else {
                     next_token = GrammarIO::clean_token(next_token);
@@ -176,6 +177,7 @@ pair<NfaNode*, NfaNode*> NFA::perform_recursion
                     pair<NfaNode *, NfaNode *> SE_nodes = perform_recursion(new_tokens, kleene, positive);
                     ending_node->add_child(0, SE_nodes.first);
                     ending_node = SE_nodes.second;
+                    prev_pair = SE_nodes;
                 }
                 else {
                     pair<NfaNode *, NfaNode *> SE_nodes1 = nfaGraph.represent_token(prev_token, new_state_id);
@@ -184,6 +186,7 @@ pair<NfaNode*, NfaNode*> NFA::perform_recursion
                     ending_node->add_child(0, SE_nodes1.first);
                     ending_node = SE_nodes2.second;
                     prev_token = "";
+                    prev_pair = {SE_nodes1.first, SE_nodes2.second};
                 }
             }
         } else {
@@ -200,6 +203,7 @@ pair<NfaNode*, NfaNode*> NFA::perform_recursion
                 ending_node->add_child(0, SE_nodes.first);
                 ending_node = SE_nodes.second;
                 prev_token = "";
+                prev_pair = SE_nodes;
             }
         }
     }
@@ -209,6 +213,7 @@ pair<NfaNode*, NfaNode*> NFA::perform_recursion
         ending_node->add_child(0, SE_nodes.first);
         ending_node = SE_nodes.second;
         prev_token = "";
+        prev_pair = SE_nodes;
     }
     NfaNode* starting_node = sentinelNode->getChildren().at(0)[0];
     delete(sentinelNode);

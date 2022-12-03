@@ -15,6 +15,7 @@ using namespace std;
 class GrammarIO {
 private:
     string grammar_input_file;
+    unordered_map<string, string> gg;
     static bool is_regular_expression(const string& first_word);
     static unordered_map<string, vector<char>> parse_regular_expression
         (vector<string> &regular_expressions);

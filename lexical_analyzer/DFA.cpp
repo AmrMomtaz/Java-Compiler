@@ -5,9 +5,7 @@
 #include <unordered_set>
 using namespace std;
 
-DFA::DFA(NFA nfaObj) : nfa(std::move(nfaObj)), curr_state_num(0) {}
-
-void DFA::run() {
+DFA::DFA(NFA& nfaObj) : nfa(nfaObj), curr_state_num(0) {
     compute_column(vector<int>{0});
     while (! states_queue.empty()) {
         vector<int> states_vector = states_queue.front();
@@ -74,7 +72,7 @@ int DFA::compute_column(const vector<int>& states) {
 }
 
 void DFA::add_accepting_state(int new_state, const vector<int>& states) {
-    const unordered_map<int, string> NFA_accepting_states = nfa.getTransitionTable().getAcceptingStates();
+    const unordered_map<int, string>& NFA_accepting_states = nfa.getTransitionTable().getAcceptingStates();
     vector<string> accepting_state_strings;
     for (int state : states) {
         if (NFA_accepting_states.find(state) != NFA_accepting_states.end()) {
@@ -94,7 +92,7 @@ unordered_set<int> DFA::get_epsilon_closure(const vector<int>& states_vector){
         // if number before and after doesn't change or nothing to be added to the queue
         // and queue size is zero then leave
 
-    const unordered_map<int, unordered_map<char, vector<int>>> transition_table = nfa.getTransitionTable().getTable();
+    const unordered_map<int, unordered_map<char, vector<int>>>& transition_table = nfa.getTransitionTable().getTable();
     queue<int> epsilon_states_queue;
     unordered_set<int> closure;
 

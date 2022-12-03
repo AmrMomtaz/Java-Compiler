@@ -34,8 +34,7 @@ private:
 
 public:
 //    explicit DFA(TransitionTable NFATransitionTable);
-    explicit DFA(NFA nfa);
-    void run();
+    explicit DFA(NFA& nfa);
     TransitionTable get_DFA();
 };
 #endif //JAVA_COMPILER_DFA_H

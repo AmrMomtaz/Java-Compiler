@@ -13,22 +13,22 @@ using namespace std;
 int main() {
     NFA nfa("grammar_input.txt");
     DFA dfa(nfa);
-    dfa.run();
     DFA_Minimized dfa_min(dfa.get_DFA());
     dfa_min.optimize_dfa();
     LexicalAnalyzer LA(dfa_min.get_DFA_Minimized());
 //    LexicalAnalyzer LA(dfa.get_DFA());
 
     string input_text="";
-    ifstream myfile; myfile.open("C:\\Users\\amr-e\\CLionProjects\\Java-Compiler\\test_program.txt");
+    ifstream myfile; myfile.open("test_program.txt");
     if ( myfile.is_open() ) {
         char mychar;
-        while ( myfile ) {
+        while (myfile) {
             mychar = myfile.get();
             input_text+=mychar;
         }
     }
     cout << input_text << "\n";
+    myfile.close();
 
     //split the input text on the white space
     vector<string> words = split_string_by_white_spaces(input_text);
