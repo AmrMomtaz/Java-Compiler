@@ -1,5 +1,6 @@
 #include "lexical_analyzer/NFA.h"
 #include "lexical_analyzer/DFA.h"
+#include "lexical_analyzer/DFA_Minimized.h"
 #include "utils/TransitionTable.h"
 #include "utils/GrammarIO.h"
 #include "lexical_analyzer/LexicalAnalyzerTest.cpp"
@@ -13,12 +14,13 @@ int main() {
     NFA nfa("grammar_input.txt");
     DFA dfa(nfa);
     dfa.run();
-    TransitionTable TT = dfa.get_DFA();
-    ///get the lexical analyzer
-    LexicalAnalyzer LA(TT);
+    DFA_Minimized dfa_min(dfa.get_DFA());
+    dfa_min.optimize_dfa();
+    LexicalAnalyzer LA(dfa_min.get_DFA_Minimized());
+//    LexicalAnalyzer LA(dfa.get_DFA());
 
     string input_text="";
-    ifstream myfile; myfile.open("C:\\Users\\momen\\OneDrive\\Documents\\GitHub\\Java-Compiler\\test_program.txt");
+    ifstream myfile; myfile.open("C:\\Users\\amr-e\\CLionProjects\\Java-Compiler\\test_program.txt");
     if ( myfile.is_open() ) {
         char mychar;
         while ( myfile ) {

@@ -40,8 +40,8 @@ public:
     const bool &isDeterministic() const;
 
     // Setters
-    void setAcceptingStates(unordered_map<int, string> accepting_states_map);
-    void setTable(unordered_map<int, unordered_map<char, vector<int>>> table_map);
+    void setAcceptingStates(const unordered_map<int, string>& accepting_states_map);
+    void setTable(const unordered_map<int, unordered_map<char, vector<int>>>& table_map);
     void setStartingStates(int ss);
 };
 

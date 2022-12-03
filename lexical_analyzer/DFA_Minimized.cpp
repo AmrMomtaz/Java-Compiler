@@ -7,7 +7,8 @@ DFA_Minimized::DFA_Minimized(TransitionTable trans_table) : tt(trans_table) {
 }
 
 bool DFA_Minimized::minimize(list<list<int>> &curr_partitions,
-                             int n_partitions, int indices[],
+                             int n_partitions, const int indices[],
+                             unordered_map<int, string> & accepting_states,
                              const unordered_map<int, unordered_map<char, vector<int>>> &table) {
 
     list<list<int>> new_partitions;
@@ -25,7 +26,8 @@ bool DFA_Minimized::minimize(list<list<int>> &curr_partitions,
             auto j = i.begin();
 
             while (j != i.end()) {
-                if (is_equiv(base_state, *j, indices, table)) {
+                if (is_equiv(base_state, *j, indices,
+                             accepting_states, table)) {
                     temp.push_back(*j);
                     j = i.erase(j);
                 }
@@ -36,14 +38,17 @@ bool DFA_Minimized::minimize(list<list<int>> &curr_partitions,
         }
     }
 
-    if (n_partitions == new_partitions.size())
+    if (n_partitions == new_partitions.size()) {
+        curr_partitions = new_partitions;
         return false;
+    }
 
     curr_partitions = new_partitions;
     return true;
 }
 
-bool DFA_Minimized::is_equiv(int state_p, int state_q, int indices[],
+bool DFA_Minimized::is_equiv(int state_p, int state_q, const int indices[],
+                             unordered_map<int, string> & accepting_states,
                              const unordered_map<int, unordered_map<char, vector<int>>> &table) {
 
     int dead_state = (int) table.size();
@@ -54,6 +59,12 @@ bool DFA_Minimized::is_equiv(int state_p, int state_q, int indices[],
         trans_p = table.at(state_p);
     if (state_q != dead_state)
         trans_q = table.at(state_q);
+
+    if (accepting_states.find(state_p) != accepting_states.end() &&
+            accepting_states.find(state_q) != accepting_states.end()) {
+        if (accepting_states[state_p] != accepting_states[state_q])
+            return false;
+    }
 
     bool flag = true;
     int u = 0, v = 0;
@@ -91,7 +102,7 @@ void DFA_Minimized::optimize_dfa() {
     int indices[table.size() + 1];
 
     for(auto & kv : table) {
-        if (accepting_states.find(kv.first) != accepting_states.end()) {
+        if (accepting_states.find(kv.first) == accepting_states.end()) {
             non_finals.push_back(kv.first);
             indices[kv.first] = 0;
         }
@@ -112,7 +123,8 @@ void DFA_Minimized::optimize_dfa() {
     partitions.push_back(finals);
 
     // Start partitioning.
-    while (minimize(partitions, (int) partitions.size(), indices, table)) {
+    while (minimize(partitions, (int) partitions.size(), indices,
+                    accepting_states, table)) {
         int idx = 0;
         for (auto & i : partitions) {
             for (auto & j : i)
@@ -141,7 +153,11 @@ void DFA_Minimized::optimize_dfa() {
             new_table[indices[u]][kv.first] = vector<int> { indices[kv.second[0]] };
     }
 
-    tt.setTable(new_table);
-    tt.setAcceptingStates(new_accepting_states);
     tt.setStartingStates(new_ss);
+    tt.setAcceptingStates(new_accepting_states);
+    tt.setTable(new_table);
+}
+
+TransitionTable DFA_Minimized::get_DFA_Minimized() {
+    return tt;
 }

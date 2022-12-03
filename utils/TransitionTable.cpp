@@ -38,3 +38,11 @@ const bool &TransitionTable::isDeterministic() const {
 void TransitionTable::setStartingStates(int starting_state_int) {
     starting_state = starting_state_int;
 }
+
+void TransitionTable::setAcceptingStates(const unordered_map<int, string> &accepting_states_map) {
+    accepting_states = accepting_states_map;
+}
+
+void TransitionTable::setTable(const unordered_map<int, unordered_map<char, vector<int>>> &table_map) {
+    table = table_map;
+}
