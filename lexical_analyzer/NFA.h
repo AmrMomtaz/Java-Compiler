@@ -23,7 +23,8 @@ private:
     pair<NfaNode*, NfaNode*> perform_recursion(const vector<string>& tokens,
                                                bool kleene_closure, bool positive_closure);
     void initialize_table();
-    void dfs(NfaNode* root, unordered_map<int, unordered_map<char,vector<int>>>& table,unordered_set<int>& visited_nodes);
+    void dfs(NfaNode* root, unordered_map<int, unordered_map<char,vector<int>>>& table,
+             unordered_set<int>& visited_nodes, unordered_set<NfaNode*>& nodes);
 public:
     explicit NFA(const string &grammar_input_file);
 

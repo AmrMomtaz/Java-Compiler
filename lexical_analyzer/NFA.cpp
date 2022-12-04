@@ -234,13 +234,19 @@ void NFA::initialize_table() {
         initial_node->add_child(0, starting_node);
 
     unordered_set<int> visited_nodes;
-    dfs(initial_node, transitionTable.getTable(), visited_nodes);
+    unordered_set<NfaNode*> nodes({initial_node});
+    dfs(initial_node, transitionTable.getTable(), visited_nodes, nodes);
+    cout << "[INFO] NFA number of states is " << nodes.size() << "." << endl;
+    for (NfaNode* node : nodes)
+        delete(node);
     visited_nodes.clear();
+    nodes.clear();
 }
 
 void NFA::dfs(NfaNode* root, unordered_map<int, unordered_map<char,
-              vector<int>>>& table, unordered_set<int>& visited_nodes) {
-    
+              vector<int>>>& table, unordered_set<int>& visited_nodes,
+              unordered_set<NfaNode*>& nodes) {
+
     int current_row = root->getId();
     if (visited_nodes.find(current_row) == visited_nodes.end()) {
         visited_nodes.insert(current_row);
@@ -248,8 +254,9 @@ void NFA::dfs(NfaNode* root, unordered_map<int, unordered_map<char,
         for (pair<const char,vector<NfaNode*>>  map_entry : root->getChildren()) {
             for (NfaNode* child : map_entry.second) {
                 table[current_row][map_entry.first].push_back(child->getId());
+                nodes.insert(child);
                 row_added = true;
-                dfs(child, table, visited_nodes);
+                dfs(child, table, visited_nodes, nodes);
             }
         }
         if (! row_added)
