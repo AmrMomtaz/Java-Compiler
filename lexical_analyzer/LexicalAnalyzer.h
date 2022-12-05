@@ -1,6 +1,7 @@
 #ifndef JAVA_COMPILER_LEXICALANALYZER_H
 #define JAVA_COMPILER_LEXICALANALYZER_H
-
+#include <map>
+#include <sstream>
 
 #include "../utils/TransitionTable.h"
 
@@ -11,6 +12,7 @@ private:
     TransitionTable TT;//the lexical analyzer has only one unchangeable DFA
     string text;
     int current_char_idx = 0;
+    map<string , string> symbol_table;
 public:
     explicit LexicalAnalyzer(TransitionTable& tt);
 
@@ -31,7 +33,16 @@ public:
     vector<pair<string ,string>> getAllTokens();
 
     //return the next token and his type
+    vector<string> adv_tokenizer(string s, char del);
+    vector<string> split_string_by_white_spaces(string s);
+
+    //return the next token and his type
     vector<pair<string ,string>> getAllTokensInText(string text);
+
+    void tokensInTextInFile(string input_path, string output_path);
+
+    // Getter
+    const map<string , string> &getSymbolTable()const;
 };
 
 

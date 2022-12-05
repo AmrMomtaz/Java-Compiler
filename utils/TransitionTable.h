@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdexcept>
 #include <iostream>
+#include <fstream>
 
 #ifndef JAVA_COMPILER_TABLE_H
 #define JAVA_COMPILER_TABLE_H
@@ -32,6 +33,8 @@ public:
                              const unordered_map<int, string>& accepting_states);
     // Adds new state to the accepting states
     void addAcceptingState(int state,const string& state_name);
+
+    void saveTableToFile(string path);
 
     // Getters
     unordered_map<int, unordered_map<char, vector<int>>> &getTable();

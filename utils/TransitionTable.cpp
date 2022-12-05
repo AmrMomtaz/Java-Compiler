@@ -21,6 +21,23 @@ void TransitionTable::addAcceptingState(int state, const string &state_name) {
     accepting_states[state] = state_name;
 }
 
+void TransitionTable::saveTableToFile(string path){
+    ofstream fh;
+    fh.open(path);
+    if (fh.is_open()) {
+        for (auto i: table) {
+            pair<int, unordered_map<char, vector<int>>> temp = i;
+            int num = temp.first;
+            unordered_map<char, vector<int>> trans = temp.second;
+            for (auto j: trans) {
+                fh << num << "---(" << j.first << ")--->" << j.second[0] << endl;
+            }
+        }
+        fh << "num of states that has coming state = " << table.size() << endl;
+    }
+    cout << "[INFO] The minimal DFA is written to minimalDFA.txt" << "\n";
+    fh.close();
+}
 // Getters
 unordered_map<int, unordered_map<char, vector<int>>> &TransitionTable::getTable() {
     return table;

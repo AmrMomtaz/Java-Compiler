@@ -14,29 +14,13 @@ int main() {
     NFA nfa("grammar_input.txt");
     DFA dfa(nfa);
     DFA_Minimized dfa_min(dfa.getTransitionTable());
-    LexicalAnalyzer LA(dfa_min.getMinimizedTransitionTable());
-
-    string input_text;
-    ifstream fh;
-    fh.open("test_program.txt");
-    if (fh.is_open()) {
-        char ch;
-        while (fh) {
-            ch = fh.get();
-            input_text+=ch;
-        }
-    }
-    cout << input_text << "\n";
-    fh.close();
-
-    // split the input text on the white space
-    vector<string> words = split_string_by_white_spaces(input_text);
-    for (auto word = words.begin(); word != words.end(); ++word) {
-        vector<pair<string, string>> tokens = LA.getAllTokensInText(*word);
-        for (auto i = tokens.begin(); i != tokens.end(); ++i) {
-            pair<string, string> token = *i;
-            cout << token.first << " : " << token.second << "\n";
-        }
-    }
+    //print the minimal DFA
+    TransitionTable TT = dfa_min.getMinimizedTransitionTable();
+    TT.saveTableToFile("minimalDFA.txt");
+    LexicalAnalyzer LA(TT);
+    LA.tokensInTextInFile("test_program.txt", "test_program_output.txt");
+    cout << "-------- Symbol Table --------" << "\n";
+    for (auto v : LA.getSymbolTable())
+        cout << v.first << "|" << v.second << "\n";
     return 0;
 }

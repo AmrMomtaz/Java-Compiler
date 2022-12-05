@@ -11,6 +11,7 @@ const string &LexicalAnalyzer::getText() const { return text;}
 void LexicalAnalyzer::setCurrentIndex(int i){current_char_idx = i;}
 // Getter
 const int &LexicalAnalyzer::getCurrentIndex() const { return current_char_idx;}
+const map<string , string> &LexicalAnalyzer::getSymbolTable() const {return symbol_table;}
 
 //return the next token and his type
 pair<string ,string> LexicalAnalyzer::getNextToken(){
@@ -50,7 +51,11 @@ pair<string ,string> LexicalAnalyzer::getNextToken(){
         //check that if the current state is accepting state or not
         if (accepting_states.find(current_state) == accepting_states.end())
             return make_pair(text.substr(starting_idx, text.size()-starting_idx), "Not Defined!");
-        return make_pair(text.substr(starting_idx, text.size()-starting_idx), accepting_states[current_state]);
+        pair<string ,string> symbol = make_pair(text.substr(starting_idx, text.size()-starting_idx), accepting_states[current_state]);
+        if (symbol.second=="id"){
+            symbol_table[symbol.first] = symbol.second;
+        }
+        return symbol;
     }
     //no coming state so go back tell find accepting state
     else{
@@ -58,12 +63,22 @@ pair<string ,string> LexicalAnalyzer::getNextToken(){
         for (auto ir = reached_states.rbegin(); ir != reached_states.rend(); ++ir) {
             int curr_state = *ir;
             if (!(accepting_states.find(curr_state) == accepting_states.end())){
-                return make_pair(text.substr(starting_idx, reached_states.size()-1-count), accepting_states[curr_state]);
+                pair<string ,string> symbol = make_pair(text.substr(starting_idx, reached_states.size()-1-count), accepting_states[curr_state]);
+                if (symbol.second=="id"){
+                    symbol_table[symbol.first] = symbol.second;
+                }
+                return symbol;
             }
             count +=1;
         }
         return make_pair(text.substr(starting_idx, text.size()-starting_idx), "Not Defined!");
     }
+}
+
+//return the next token and his type
+vector<pair<string ,string>> LexicalAnalyzer::getAllTokensInText(string text) {
+    setText(text);
+    return getAllTokens();
 }
 
 //return the next token and his type
@@ -76,8 +91,61 @@ vector<pair<string ,string>> LexicalAnalyzer::getAllTokens(){
     }
     return pairs;
 }
-//return the next token and his type
-vector<pair<string ,string>> LexicalAnalyzer::getAllTokensInText(string text){
-    setText(text);
-    return getAllTokens();
+
+vector<string> LexicalAnalyzer::adv_tokenizer(string s, char del){
+    vector<string> strings;
+    stringstream ss(s);
+    string word;
+    while (!ss.eof()) {
+        getline(ss, word, del);
+        strings.push_back(word);
+    }
+    return strings;
 }
+vector<string> LexicalAnalyzer::split_string_by_white_spaces(string s){
+    char white_spaces[3] = {' ','\n', '\t'};
+    vector<string> words = adv_tokenizer(s, white_spaces[0]);
+    for (int i=1; i<3; i++){
+        vector<string> temp_1;
+        for (auto j = words.begin(); j != words.end(); ++j){
+            vector<string> temp_2 = adv_tokenizer(*j, white_spaces[i]);
+            for (auto k = temp_2.begin(); k != temp_2.end(); ++k)
+                temp_1.push_back(*k);
+        }
+        words=temp_1;
+    }
+    return words;
+}
+
+void LexicalAnalyzer::tokensInTextInFile(string input_path, string output_path){
+    string input_text;
+    ifstream fh;
+    fh.open("test_program.txt");
+    if (fh.is_open()) {
+        char ch;
+        while (fh) {
+            ch = fh.get();
+            input_text+=ch;
+        }
+    }
+    cout << input_text << "\n";
+    fh.close();
+
+    // split the input text on the white space
+    vector<string> words = split_string_by_white_spaces(input_text);
+
+    cout << "-------- Tokens --------" << "\n";
+    ofstream fo;
+    fo.open("test_program_output.txt");
+    if (fo.is_open()) {
+        for (auto word = words.begin(); word != words.end(); ++word) {
+            vector<pair<string, string>> tokens = getAllTokensInText(*word);
+            for (auto i = tokens.begin(); i != tokens.end(); ++i) {
+                pair<string, string> token = *i;
+                fo << token.first << " : " << token.second << "\n";
+                cout << token.first << " : " << token.second << "\n";
+            }
+        }
+    }
+}
+
