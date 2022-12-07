@@ -71,7 +71,7 @@ pair<string ,string> LexicalAnalyzer::getNextToken(){
             }
             count +=1;
         }
-        return make_pair(text.substr(starting_idx, text.size()-starting_idx), "Not Defined!");
+        return make_pair(text.substr(starting_idx, starting_idx+count), "Not Defined!");
     }
 }
 
