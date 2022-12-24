@@ -27,5 +27,6 @@ int main() {
 
     GrammarParser grammarParser("parser_grammar.txt");
     unordered_map<string, vector<string>>& productions = grammarParser.getProductions();
+    cout << "Done" << endl;
     return 0;
 }

@@ -1,4 +1,8 @@
 #include <unordered_map>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 #include <vector>
 #include <string>
 
@@ -16,6 +20,9 @@ private:
     const string input_file_name;
     // productions map
     unordered_map<string, vector<string>> productions;
+
+    void parse_grammar();
+    void parse_production(vector<string>& production_lines, string& production_name);
 };
 
 
