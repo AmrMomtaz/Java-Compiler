@@ -13,6 +13,7 @@ set(SOURCE
         lexical_analyzer/DFA.cpp
         lexical_analyzer/DFA_Minimized.cpp
         lexical_analyzer/LexicalAnalyzer.cpp
+        parser_generator/Parser.cpp
         parser_generator/GrammarParser.cpp)
 
 add_executable(java_compiler "${SOURCE}")
