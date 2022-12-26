@@ -11,6 +11,15 @@ void Parser::make_parsing_table(unordered_map<string,pair<vector<pair<string,vec
             if(first.first!="epsilon") {
                 temp[first.first] = first.second;
 //                cout << first.first << ' ';
+                for(auto& follow: x.second.second){
+                    if (temp.count(follow)==0) {
+                        vector<string> v;
+                        v.push_back("sync");
+                        temp[follow] = v;
+//                    temp[first.first].push_back("sync");
+//                    std::cout << follow << ' ';
+                    }
+                }
             }
             else{
 //                cout<<"here"<<endl;
