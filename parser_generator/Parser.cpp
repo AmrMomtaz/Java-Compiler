@@ -1,6 +1,7 @@
 #include "Parser.h"
 Parser::Parser(LexicalAnalyzer &la, unordered_map<string,pair<vector<pair<string,vector<string>>>,vector<string>>> &LL1 ) : LA(la) {
     make_parsing_table(LL1);
+    stack.push("$");
     std::cout << "[INFO] New parser created" << "\n";
 }
 void Parser::make_parsing_table(unordered_map<string,pair<vector<pair<string,vector<string>>>,vector<string>>> &LL1){
