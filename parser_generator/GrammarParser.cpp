@@ -4,7 +4,7 @@ GrammarParser::GrammarParser(const string &inputFileName) : input_file_name(inpu
     parse_grammar();
 }
 
-unordered_map<string, vector<string>> &GrammarParser::getProductions() {
+unordered_map<string, vector<vector<string>>> &GrammarParser::getProductions() {
     return productions;
 }
 
@@ -48,7 +48,8 @@ void GrammarParser::parse_grammar() {
  * This function returns the production a vector of production tokens given the production lines.
  */
 void GrammarParser::parse_production(vector<string> &production_lines, string& production_name) {
-    vector<string> tokens;
+    vector<vector<string>> tokens;
+    vector<string> current_tokens;
     for (string& production_line : production_lines) {
         int n = production_line.size();
         for (int i = 0 ; i < n ; i++) {
@@ -66,8 +67,16 @@ void GrammarParser::parse_production(vector<string> &production_lines, string& p
                 while (i < n && production_line[i] != ' ')
                     token += production_line[i++];
             }
-            tokens.emplace_back(token);
+            if (token == "|") {
+                tokens.emplace_back(current_tokens);
+                current_tokens.clear();
+            }
+            else {
+                current_tokens.emplace_back(token);
+            }
         }
     }
+    if (! current_tokens.empty())
+        tokens.emplace_back(current_tokens);
     productions[production_name] = tokens;
 }

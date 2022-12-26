@@ -15,11 +15,11 @@ public:
     // Constructor
     explicit GrammarParser(const string &inputFileName);
     // Getter
-    unordered_map<string, vector<string>> &getProductions();
+    unordered_map<string, vector<vector<string>>> &getProductions();
 private:
     const string input_file_name;
     // productions map
-    unordered_map<string, vector<string>> productions;
+    unordered_map<string, vector<vector<string>>> productions;
 
     void parse_grammar();
     void parse_production(vector<string>& production_lines, string& production_name);
