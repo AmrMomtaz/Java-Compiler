@@ -13,10 +13,12 @@ private:
     unordered_map<string, unordered_map<string,vector<string>>> parsing_table;
 
     void make_parsing_table(unordered_map<string,pair<vector<pair<string,vector<string>>>,vector<string>>> &LL1);
+
+    string get_stack_elements();
 public:
     explicit Parser(LexicalAnalyzer &la, unordered_map<string,pair<vector<pair<string,vector<string>>>,vector<string>>> &LL1);
 
-    void parseInput();
+    void parseInput(string input_file_path, string token_output_file,string starting_production);
 
     void printParsingTable();
 };
