@@ -80,3 +80,17 @@ void GrammarParser::parse_production(vector<string> &production_lines, string& p
         tokens.emplace_back(current_tokens);
     productions[production_name] = tokens;
 }
+
+string GrammarParser::getStartingSymbol() {
+    string starting_state;
+    ifstream infile(input_file_name);
+    string line;
+    getline(infile, line);
+    infile.close();
+    int i = 0;
+    while (line[i] == ' ' || line[i] == '#')
+        i++;
+    while (line[i] != ' ' && line[i] != '=')
+        starting_state += line[i++];
+    return starting_state;
+}
