@@ -16,6 +16,8 @@ public:
     explicit GrammarParser(const string &inputFileName);
     // Getter
     unordered_map<string, vector<vector<string>>> &getProductions();
+    // Gets the starting symbol in the grammar
+    string getStartingSymbol();
 private:
     const string input_file_name;
     // productions map
