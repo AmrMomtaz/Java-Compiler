@@ -40,6 +40,7 @@ void Parser::make_parsing_table(unordered_map<string, pair
     }
 }
 void Parser::printParsingTable(){
+    cout <<"______________ Parsing Table ______________"<<endl;
     for (auto x : parsing_table){
         cout<< x.first<<": "<< endl;
         for (auto y : x.second){
