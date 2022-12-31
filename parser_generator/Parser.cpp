@@ -40,7 +40,7 @@ void Parser::make_parsing_table(unordered_map<string, pair
     }
 }
 void Parser::printParsingTable(){
-    cout <<"______________ Parsing Table ______________"<<endl;
+    cout <<"______________________ Parsing Table ______________________"<<endl;
     for (auto x : parsing_table){
         cout<< x.first<<": "<< endl;
         for (auto y : x.second){
@@ -50,7 +50,7 @@ void Parser::printParsingTable(){
             }
             cout << endl;
         }
-        cout <<"____________________________"<<endl;
+        cout <<"________________________________________________________"<<endl;
     }
 }
 string Parser::get_stack_elements(){
