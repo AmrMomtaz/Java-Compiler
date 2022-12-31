@@ -6,6 +6,7 @@
 #include "lexical_analyzer/LexicalAnalyzerTest.cpp"
 #include "parser_generator/GrammarParser.h"
 #include "parser_generator/Parser.h"
+#include "parser_generator/LLOneGrammarGenerator.h"
 
 using namespace std;
 
@@ -83,6 +84,8 @@ int main() {
     ///Dyh 7agat taba3 Momtaz
     GrammarParser grammarParser("parser_grammar.txt");
     unordered_map<string, vector<vector<string>>>& productions = grammarParser.getProductions();
-    cout << grammarParser.getStartingSymbol() << endl;
+    LLOneGrammarGenerator ll = LLOneGrammarGenerator(productions);
+    ll.print_productions();
+    cout << ll.get_ll_one_grammar().size();
     return 0;
 }

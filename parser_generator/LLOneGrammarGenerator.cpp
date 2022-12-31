@@ -138,8 +138,19 @@ unordered_map<string, vector<vector<string>>> LLOneGrammarGenerator::eliminate_l
 
     // get the remaining vectors to NOT be touched
     for (int i=0; i<RHS.size(); i++) {
-        if (find(indices_to_be_factored.begin(), indices_to_be_factored.end(), i) != indices_to_be_factored.end())
+//        if (find(indices_to_be_factored.begin(), indices_to_be_factored.end(), i) != indices_to_be_factored.end())
+//            continue;
+        bool isFound = false;
+        for (int idx : indices_to_be_factored) {
+            if (idx == i) {
+                isFound = true;
+                break;
+            }
+        }
+        if (isFound) {
+            isFound = false;
             continue;
+        }
 
         remain_same.push_back(RHS[i]);
     }
