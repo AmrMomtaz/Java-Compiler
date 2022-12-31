@@ -214,7 +214,9 @@ void LLOneGrammarGenerator::substitute(string LHS1, string LHS2) {
     }
 }
 
-unordered_map<string, vector<vector<string>>> LLOneGrammarGenerator::get_ll_one_grammar() {
+// Edit from Elzahaby (Just to make it return an address).
+const unordered_map<string, vector<vector<string>>> &LLOneGrammarGenerator::
+    get_ll_one_grammar() const {
     return productions;
 }
 

@@ -7,6 +7,7 @@
 #include "parser_generator/GrammarParser.h"
 #include "parser_generator/Parser.h"
 #include "parser_generator/LLOneGrammarGenerator.h"
+#include "parser_generator/FF_Generator.h"
 
 using namespace std;
 
@@ -84,8 +85,43 @@ int main() {
     ///Dyh 7agat taba3 Momtaz
     GrammarParser grammarParser("parser_grammar.txt");
     unordered_map<string, vector<vector<string>>>& productions = grammarParser.getProductions();
-    LLOneGrammarGenerator ll = LLOneGrammarGenerator(productions);
-    ll.print_productions();
-    cout << ll.get_ll_one_grammar().size();
+    cout << grammarParser.getStartingSymbol() << endl;
+    string ss = grammarParser.getStartingSymbol();
+
+    LLOneGrammarGenerator ll1_gen(productions);
+    unordered_map<string, vector<vector<string>>> grammar = ll1_gen.get_ll_one_grammar();
+
+    FF_Generator ff_gen(grammar, ss);
+
+    unordered_map<string, set<string>> first = ff_gen.getFirst();
+    unordered_map<string, set<string>> follow = ff_gen.getFollow();
+
+//    int i = 0;
+//    for (auto & kv : first) {
+//        cout << kv.first << " ::= {";
+//        for (auto & m : kv.second) {
+//            if (++i == kv.second.size())
+//                cout << m << "}";
+//            else
+//                cout << m << " , ";
+//        }
+//        i = 0;
+//        cout << endl;
+//    }
+//
+//    cout << "=============================" << endl;
+//
+//    for (auto & kv : follow) {
+//        cout << kv.first << " ::= {";
+//        for (auto & m : kv.second) {
+//            if (++i == kv.second.size())
+//                cout << m << "}";
+//            else
+//                cout << m << " , ";
+//        }
+//        i = 0;
+//        cout << endl;
+//    }
+
     return 0;
 }
