@@ -145,9 +145,10 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
 
                         if(strings.size()==0){///Nun Terminal No Matching in the parsing table
                             cout<<",Error: Non Terminal can't go to Terminal -> drop that Non Terminal";
-                            output_left_most_derivation.push_back("-> Error: Non Terminal can't go to Terminal -> drop that Non Terminal");
-                            stack.pop();
+                            cout<<", solution: discard "+token.first + " from the input";
+                            output_left_most_derivation.push_back("-> Error: discard "+token.first + " from the input");
                             output_left_most_derivation.push_back(get_stack_elements());
+                            get_next_token= true;
                         } else{
                             cout <<",the new Production: "+imploded.str();
                             stack.pop();
