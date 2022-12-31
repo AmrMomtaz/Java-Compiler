@@ -12,7 +12,7 @@ void Parser::make_parsing_table(unordered_map<string, pair
 //        cout << x.first << " " << x.second.first.size() << endl;
         unordered_map<string,vector<string>> temp;
         for(auto& first: x.second.first){
-            if(first.first!="epsilon") {
+            if(first.first!="Epsilon") {
                 temp[first.first] = first.second;
 //                cout << first.first << ' ';
                 for(auto& follow: x.second.second){
@@ -29,7 +29,7 @@ void Parser::make_parsing_table(unordered_map<string, pair
 //                cout<<"here"<<endl;
                 for(auto& follow: x.second.second){
                     vector<string> v;
-                    v.push_back("epsilon");
+                    v.push_back("Epsilon");
                     temp[follow] = v;
 //                    std::cout << follow << ' ';
                 }
@@ -141,8 +141,8 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
                             output_left_most_derivation.push_back(get_stack_elements());
                             get_next_token = true;
                         } else{
-                            if(stack.top()=="epsilon"){
-                                cout << ", Pop epsilon from the stack";
+                            if(stack.top()=="Epsilon"){
+                                cout << ", Pop Epsilon from the stack";
                                 stack.pop();
                                 output_left_most_derivation.push_back(get_stack_elements());
                             }
@@ -167,6 +167,12 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
                             output_left_most_derivation.push_back(get_stack_elements());
                             get_next_token= true;
                         } else{
+                            if(strings.size()==1&&strings[0]=="sync"){
+                                cout<<", pop the Non-terminal "+stack.top()+" from the stack";
+                                output_left_most_derivation.push_back("-> Pop the Non-terminal "+stack.top()+" from the stack");
+                                stack.pop();
+                                output_left_most_derivation.push_back(get_stack_elements());
+                            }
                             cout <<",the new Production: "+imploded.str();
                             stack.pop();
                             for (auto ir = strings.rbegin(); ir != strings.rend(); ++ir) {
