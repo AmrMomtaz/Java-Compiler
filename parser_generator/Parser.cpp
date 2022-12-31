@@ -172,6 +172,7 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
                                 output_left_most_derivation.push_back("-> Pop the Non-terminal "+stack.top()+" from the stack");
                                 stack.pop();
                                 output_left_most_derivation.push_back(get_stack_elements());
+                                break;
                             }
                             cout <<",the new Production: "+imploded.str();
                             stack.pop();
