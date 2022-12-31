@@ -15,8 +15,9 @@ set(SOURCE
         lexical_analyzer/LexicalAnalyzer.cpp
         parser_generator/Parser.cpp
         parser_generator/GrammarParser.cpp
+        parser_generator/LLOneGrammarGenerator.h
         parser_generator/LLOneGrammarGenerator.cpp
-        parser_generator/LLOneGrammarGenerator.h)
+        parser_generator/FF_Generator.cpp)
 
 add_executable(java_compiler "${SOURCE}")
 

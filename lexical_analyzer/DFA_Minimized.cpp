@@ -122,6 +122,7 @@ bool DFA_Minimized::is_equiv(int state_p, int state_q, const int indices[],
     if (state_q != dead_state)
         trans_q = table.at(state_q);
 
+    // optimization to be done.
     if (accepting_states.find(state_p) != accepting_states.end() &&
             accepting_states.find(state_q) != accepting_states.end()) {
         if (accepting_states[state_p] != accepting_states[state_q])

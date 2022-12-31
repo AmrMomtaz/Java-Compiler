@@ -11,7 +11,8 @@ public:
     int counter;
 
     explicit LLOneGrammarGenerator(unordered_map<string, vector<vector<string>>> file_productions);
-    unordered_map<string, vector<vector<string>>> get_ll_one_grammar();
+    // Edit from Elzahaby (Just to make it return an address).
+    const unordered_map<string, vector<vector<string>>> &get_ll_one_grammar() const;
     void print_productions();
 
 private:
