@@ -51,6 +51,7 @@ void Parser::printParsingTable(){
     }
 }
 string Parser::get_stack_elements(){
+    if(stack.empty()) return "";
     ::stack<string> tempt;
     string strings;
     while(stack.size()!=1) {
@@ -88,6 +89,8 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
     // split the input text on the white space
     vector<string> words = LA.split_string_by_white_spaces(input_text);
 
+    bool text_ended = false;
+    bool set_text_ended = false;
     cout << "-------- Tokens --------" << "\n";
     ofstream fo;
     fo.open(token_output_file);
@@ -96,7 +99,12 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
             vector<pair<string, string>> tokens = LA.getAllTokensInText(*word);
             for (auto i = tokens.begin(); i != tokens.end(); ++i) {
                 pair<string, string> token = *i;
-                if(token.first=="\377"){
+                if(token.first=="\377"&&!text_ended){
+                    set_text_ended= true;
+                    token.first="\377";
+                    token.second="$";
+                }
+                if(token.first=="\377"&&text_ended){
                     if(stack.top()!="$"){
                         cout << "Error: The input file finished while the stack isn't empty!" << endl;
                         output_left_most_derivation.push_back("-> Error: The input file finished while the stack isn't empty!");
@@ -108,12 +116,19 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
                     }
 
                 }
+                if(set_text_ended){
+                    text_ended= true;
+                }
                 fo << token.first << " : " << token.second << "\n";
 //                cout << token.first << " : " << token.second << "\n";
                 cout << token.first << " : " << token.second;
                 //the parser work here
                 bool get_next_token = false;
                 while(!get_next_token){
+                    if(stack.empty()){
+                        get_next_token= true;
+                        break;
+                    }
                     bool is_terminal =  parsing_table.find(stack.top())==parsing_table.end();
 //                    cout << ", " << is_terminal;
                     if (is_terminal){
