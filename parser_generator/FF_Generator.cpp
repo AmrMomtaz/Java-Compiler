@@ -40,6 +40,9 @@ void FF_Generator::computeFirst(const string& s, const vector<vector<string>>& p
         while (j < m) {
             if (prods[i][j] == "Epsilon" || is_terminal(prods[i][j])) {
                 First[s].insert(prods[i][j]);
+                // ....Edit....
+                associated_prod[s].emplace_back(prods[i][j], prods[i]);
+                // ....End....
                 has_Epsilon = prods[i][j] == "Epsilon";
                 j = 0;
                 break;
@@ -53,6 +56,13 @@ void FF_Generator::computeFirst(const string& s, const vector<vector<string>>& p
                 return;
             }
             has_Epsilon = union_(First[s], First[prods[i][j]]);
+            // ....Edit....
+            for (auto & f : First[prods[i][j]])
+                if (f == "Epsilon" && j < m - 1)
+                    continue;
+                else
+                    associated_prod[s].emplace_back(f, prods[i]);
+            // ....End....
             if (!has_Epsilon) {
                 j = 0;
                 break;
@@ -171,8 +181,17 @@ void FF_Generator::computeFollow(const string& s) {
 //    return set_p.find("Epsilon") != set_p.end();
 //}
 
-unordered_map<string, vector<vector<string>>> FF_Generator::getProductions() {
-    return ll1;
+unordered_map<string, pair
+    <vector<pair<string, vector<string>>>,
+    set<string>>> FF_Generator::getProductions() {
+
+    unordered_map<string, pair
+        <vector<pair<string, vector<string>>>,
+        set<string>>> output;
+
+    for (auto & kv : ll1)
+        output[kv.first] = {associated_prod[kv.first], Follow[kv.first]};
+    return output;
 }
 
 bool FF_Generator::is_terminal(const string& s) {

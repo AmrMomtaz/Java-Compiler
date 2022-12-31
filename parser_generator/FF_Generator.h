@@ -14,6 +14,7 @@ private:
     unordered_map<string, vector<vector<string>>> ll1;
     unordered_map<string, set<string>> First;
     unordered_map<string, set<string>> Follow;
+    unordered_map<string, vector<pair<string, vector<string>>>> associated_prod;
     unordered_map<string, pair<int, int>> indices;
     set<string> done;
     string ss;
@@ -26,7 +27,9 @@ private:
 
 public:
     explicit FF_Generator(unordered_map<string, vector<vector<string>>> &grammar, string& ss);
-    unordered_map<string, vector<vector<string>>> getProductions();
+    unordered_map<string, pair
+        <vector<pair<string, vector<string>>>,
+        set<string>>> getProductions();
     const unordered_map<string, set<string>> &getFirst() const;
     const unordered_map<string, set<string>> &getFollow() const;
 };
