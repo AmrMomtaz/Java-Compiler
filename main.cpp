@@ -99,8 +99,13 @@ int main() {
 
 
     Parser PA(LA, ff_out);
-    PA.printParsingTable();
-    PA.parseInput(ss,"test_program.txt","test_program_output.txt","left_most_derivation_output_file.txt","stack_events_and_errors.txt");
+    if (PA.valid_parsing_table) {
+        PA.printParsingTable();
+        PA.parseInput(ss, "test_program.txt", "test_program_output.txt", "left_most_derivation_output_file.txt",
+                      "stack_events_and_errors.txt");
+    } else{
+        cout<<"Cannot parsing as, the grammar is ambiguous!"<<endl;
+    }
 
     ///Dyh 7agat taba3 Momtaz
 //    GrammarParser grammarParser("parser_grammar.txt");

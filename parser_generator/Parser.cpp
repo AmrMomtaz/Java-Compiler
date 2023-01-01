@@ -1,11 +1,11 @@
 #include <iterator>
 #include "Parser.h"
 Parser::Parser(LexicalAnalyzer &la, unordered_map<string,pair<vector<pair<string,vector<string>>>,set<string>>> &LL1 ) : LA(la) {
-    make_parsing_table(LL1);
+    valid_parsing_table=make_parsing_table(LL1);
     stack.push("$");
     std::cout << "[INFO] New parser created" << "\n";
 }
-void Parser::make_parsing_table(unordered_map<string, pair
+bool Parser::make_parsing_table(unordered_map<string, pair
         <vector<pair<string,vector<string>>>,
         set<string>>> &LL1) {
     for (auto x : LL1){
@@ -28,16 +28,22 @@ void Parser::make_parsing_table(unordered_map<string, pair
             else{
 //                cout<<"here"<<endl;
                 for(auto& follow: x.second.second){
-                    vector<string> v;
-                    v.push_back("Epsilon");
-                    temp[follow] = v;
+                    if (temp.count(follow)==0||(temp[follow].size()==1&&temp[follow][0]=="sync")) {
+                        vector<string> v;
+                        v.push_back("Epsilon");
+                        temp[follow] = v;
 //                    std::cout << follow << ' ';
+                    } else{
+                        cout<< "-> ERROR: the Grammar is ambiguous!"<<endl;
+                        return false;
+                    }
                 }
             }
         }
 //        cout << "\n";
         parsing_table[x.first]=temp;
     }
+    return true;
 }
 void Parser::printParsingTable(){
     cout <<"--------------------------------- Parsing Table ----------------------------------"<<endl;
