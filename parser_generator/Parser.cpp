@@ -40,7 +40,7 @@ void Parser::make_parsing_table(unordered_map<string, pair
     }
 }
 void Parser::printParsingTable(){
-    cout <<"______________________ Parsing Table ______________________"<<endl;
+    cout <<"--------------------------------- Parsing Table ----------------------------------"<<endl;
     for (auto x : parsing_table){
         cout<< x.first<<": "<< endl;
         for (auto y : x.second){
@@ -52,6 +52,7 @@ void Parser::printParsingTable(){
         }
         cout <<"________________________________________________________"<<endl;
     }
+    cout<<"------------------------------ End of Parsing Table--------------------------------"<<endl;
 }
 string Parser::get_stack_elements(){
     if(stack.empty()) return "";
@@ -68,13 +69,29 @@ string Parser::get_stack_elements(){
     }
     return strings;
 }
-void Parser::parseInput(string input_file_path, string token_output_file, string starting_production){
-    vector<string> output_left_most_derivation;
-
-    vector<string> error_messages;
+vector<string> Parser::get_stack_elements_vector(){
+    if(stack.empty()) return vector<string>{""};
+    ::stack<string> tempt;
+    vector<string> strings;
+    while(stack.size()!=1) {
+        tempt.push(stack.top());
+        strings.push_back(stack.top()+=" ");
+        stack.pop();
+    }
+    while(!tempt.empty()) {
+        stack.push(tempt.top());
+        tempt.pop();
+    }
+    return strings;
+}
+void Parser::parseInput(string starting_production, string input_file_path, string token_output_file, string left_most_derivation_output_file, string stack_events_and_errors){
+    vector<string> stack_statements;
+    int current_place = 0;
+    vector<vector<string>> output_left_most_derivation;
 
     stack.push(starting_production);
-    output_left_most_derivation.push_back(get_stack_elements());
+    stack_statements.push_back(get_stack_elements());
+    output_left_most_derivation.push_back(get_stack_elements_vector());
 
     string input_text;
     ifstream fh;
@@ -86,6 +103,7 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
             input_text+=ch;
         }
     }
+    cout<<"--------------------------------- The input file ----------------------------------"<<endl;
     cout << input_text << "\n";
     fh.close();
 
@@ -94,7 +112,7 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
 
     bool text_ended = false;
     bool set_text_ended = false;
-    cout << "-------- Tokens --------" << "\n";
+    cout << "------------------------------- Tokens and events --------------------------------" << "\n";
     ofstream fo;
     fo.open(token_output_file);
     if (fo.is_open()) {
@@ -110,12 +128,12 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
                 if(token.first=="\377"&&text_ended){
                     if(stack.top()!="$"){
                         cout << "Error: The input file finished while the stack isn't empty!" << endl;
-                        output_left_most_derivation.push_back("-> Error: The input file finished while the stack isn't empty!");
+                        stack_statements.push_back("-> Error: The input file finished while the stack isn't empty!");
                         break;
                     }
                     else{
                         cout << "Finished Parsing the input file." << endl;
-                        output_left_most_derivation.push_back("-> Finished Parsing the input file.");
+                        stack_statements.push_back("-> Finished Parsing the input file.");
                     }
 
                 }
@@ -137,21 +155,24 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
                     if (is_terminal){
                         if(stack.top()==token.second){
                             cout<< ", Matching "+token.second;
-                            output_left_most_derivation.push_back("-> Matching "+token.second);
+                            stack_statements.push_back("-> Matching " + token.second);
                             stack.pop();
-                            output_left_most_derivation.push_back(get_stack_elements());
+                            stack_statements.push_back(get_stack_elements());
+                            current_place+=1;
                             get_next_token = true;
                         } else{
                             if(stack.top()=="Epsilon"){
                                 cout << ", Pop Epsilon from the stack";
                                 stack.pop();
-                                output_left_most_derivation.push_back(get_stack_elements());
+                                stack_statements.push_back(get_stack_elements());
+                                current_place+=1;
                             }
                             else {
                                 cout << ", Error -> insert " + stack.top() + " in the input";
-                                output_left_most_derivation.push_back("-> Error: insert "+stack.top() + " in the input");
+                                stack_statements.push_back("-> Error: insert " + stack.top() + " in the input");
                                 stack.pop();
-                                output_left_most_derivation.push_back(get_stack_elements());
+                                stack_statements.push_back(get_stack_elements());
+                                current_place+=1;
 //                                get_next_token = true;
                             }
                         }
@@ -164,23 +185,40 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
                         if(strings.size()==0){///Nun Terminal No Matching in the parsing table
                             cout<<",Error: Non Terminal can't go to Terminal -> drop that Non Terminal";
                             cout<<", solution: discard "+token.first + " from the input";
-                            output_left_most_derivation.push_back("-> Error: discard "+token.first + " from the input");
-                            output_left_most_derivation.push_back(get_stack_elements());
+                            stack_statements.push_back("-> Error: discard " + token.first + " from the input");
+                            stack_statements.push_back(get_stack_elements());
                             get_next_token= true;
                         } else{
                             if(strings.size()==1&&strings[0]=="sync"){
                                 cout<<", pop the Non-terminal "+stack.top()+" from the stack";
-                                output_left_most_derivation.push_back("-> Pop the Non-terminal "+stack.top()+" from the stack");
+                                stack_statements.push_back("-> Pop the Non-terminal " + stack.top() + " from the stack");
                                 stack.pop();
-                                output_left_most_derivation.push_back(get_stack_elements());
+                                stack_statements.push_back(get_stack_elements());
+
+                                vector<string> temp=output_left_most_derivation[output_left_most_derivation.size()-1];
+                                temp[current_place]="sync";
+                                current_place+=1;
+                                output_left_most_derivation.push_back(temp);
                                 continue;
                             }
                             cout <<",the new Production: "+imploded.str();
                             stack.pop();
+                            current_place+=1;
+
                             for (auto ir = strings.rbegin(); ir != strings.rend(); ++ir) {
                                 stack.push(*ir);
                             }
-                            output_left_most_derivation.push_back(get_stack_elements());
+                            stack_statements.push_back(get_stack_elements());
+
+                            int current = 0;
+                            vector<string> temp=output_left_most_derivation[output_left_most_derivation.size()-1];
+                            for (auto ir = strings.begin(); ir != strings.end(); ++ir) {
+                                temp.insert(temp.begin() + current_place + current, *ir);
+                                current+=1;
+                            }
+                            temp.erase(temp.begin() + current_place - 1);
+                            current_place-=1;
+                            output_left_most_derivation.push_back(temp);
 //                            for(auto &x:strings){
 //                                stack.push(x);
 //                            }
@@ -192,7 +230,30 @@ void Parser::parseInput(string input_file_path, string token_output_file, string
             }
         }
     }
-    cout<<"-------- The Leftmost Derivation Sentential --------"<<endl;
-    for (auto i = output_left_most_derivation.begin(); i != output_left_most_derivation.end(); ++i)
-        cout << *i << endl;
+//    fo.close();
+
+    ofstream fo_2;
+    fo_2.open(stack_events_and_errors);
+    if (fo_2.is_open()) {
+        cout << "-------------------------------- The Stack Updates --------------------------------" << endl;
+        for (auto i = stack_statements.begin(); i != stack_statements.end(); ++i) {
+            cout << *i << endl;
+            fo_2 << *i << endl;
+        }
+    }
+
+    ofstream fo_1;
+    fo_1.open(left_most_derivation_output_file);
+    if (fo_1.is_open()) {
+        cout<<"------------------------ The Leftmost Derivation Sentential ------------------------"<<"\n";
+        fo_1<<"------------------------ The Leftmost Derivation Sentential ------------------------"<<"\n";
+        for (auto i = output_left_most_derivation.begin(); i != output_left_most_derivation.end(); ++i) {
+            ostringstream imploded;
+            vector<string> strings = *i;
+            copy(strings.begin(), strings.end(),
+                 ostream_iterator<std::string>(imploded, " "));
+            cout << imploded.str() << "\n";
+            fo_1 << imploded.str() << "\n";
+        }
+    }
 }
