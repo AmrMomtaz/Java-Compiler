@@ -45,20 +45,31 @@ bool Parser::make_parsing_table(unordered_map<string, pair
     }
     return true;
 }
-void Parser::printParsingTable(){
-    cout <<"--------------------------------- Parsing Table ----------------------------------"<<endl;
-    for (auto x : parsing_table){
-        cout<< x.first<<": "<< endl;
-        for (auto y : x.second){
-            cout << y.first<<": ";
-            for (auto z : y.second){
-                cout<<z<<" ";
+void Parser::printParsingTable(string parsing_table_output_file){
+    ofstream fo_1;
+    fo_1.open(parsing_table_output_file);
+    if (fo_1.is_open()) {
+        cout << "--------------------------------- Parsing Table ----------------------------------" << endl;
+        fo_1 << "--------------------------------- Parsing Table ----------------------------------" << endl;
+        for (auto x: parsing_table) {
+            cout << x.first << ": " << endl;
+            fo_1 << x.first << ": " << endl;
+            for (auto y: x.second) {
+                cout << y.first << ": ";
+                fo_1 << y.first << ": ";
+                for (auto z: y.second) {
+                    cout << z << " ";
+                    fo_1 << z << " ";
+                }
+                cout << endl;
+                fo_1 << endl;
             }
-            cout << endl;
+            cout << "________________________________________________________" << endl;
+            fo_1 << "________________________________________________________" << endl;
         }
-        cout <<"________________________________________________________"<<endl;
+        cout << "------------------------------ End of Parsing Table--------------------------------" << endl;
+        fo_1 << "------------------------------ End of Parsing Table--------------------------------" << endl;
     }
-    cout<<"------------------------------ End of Parsing Table--------------------------------"<<endl;
 }
 string Parser::get_stack_elements(){
     if(stack.empty()) return "";

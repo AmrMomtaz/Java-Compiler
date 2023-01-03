@@ -23,7 +23,7 @@ public:
 
     void parseInput(string input_file_path, string token_output_file,string starting_production, string left_most_derivation_output_file, string stack_events_and_errors);
 
-    void printParsingTable();
+    void printParsingTable(string parsing_table_output_file);
 };
 
 

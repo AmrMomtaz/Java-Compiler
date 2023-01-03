@@ -100,7 +100,7 @@ int main() {
 
     Parser PA(LA, ff_out);
     if (PA.valid_parsing_table) {
-        PA.printParsingTable();
+        PA.printParsingTable("parsing_table_output_file.txt");
         PA.parseInput(ss, "test_program.txt", "test_program_output.txt", "left_most_derivation_output_file.txt",
                       "stack_events_and_errors.txt");
     } else{
