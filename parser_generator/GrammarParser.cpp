@@ -82,9 +82,8 @@ void GrammarParser::parse_production(vector<string> &production_lines, string& p
 }
 
 string GrammarParser::getStartingSymbol() {
-    string starting_state;
+    string starting_state, line;
     ifstream infile(input_file_name);
-    string line;
     getline(infile, line);
     infile.close();
     int i = 0;
