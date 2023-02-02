@@ -8,4 +8,4 @@ The lexical analyzer generator is required to automatically construct a lexical 
 The parser generator expects a grammar as input. It should compute First and Follow sets and uses them to construct a predictive parsing table for the grammar.
 The table is to be used to drive a predictive top-down parser. A bonus task we included is converting any grammar to be LL(1).
 <br><br>
-<h3><b>Please refer to the docs directory for full description of each phase and all the implementation details are found in the reports.</b></h3>
+<h3><b>Please refer to the docs directory for full description of each phase and all the implementation details.</b></h3>
